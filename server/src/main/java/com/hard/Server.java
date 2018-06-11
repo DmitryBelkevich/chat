@@ -25,10 +25,17 @@ public class Server {
 
         initStreams();
 
-        write("Hello World");
+        String str = readData();
+        write(str);
 
         stop();
         System.out.println("4. stopped");
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {

@@ -20,6 +20,8 @@ public class Client {
         init();
         initStreams();
 
+        write("Hello World");
+
         String str = readData();
         System.out.println(str);
 
