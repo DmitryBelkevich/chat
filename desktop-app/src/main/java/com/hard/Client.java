@@ -10,7 +10,7 @@ import java.net.Socket;
 public class Client {
     private View view = new View();
 
-    private String host = "18.219.167.139";
+    private String host = "localhost";//"18.219.167.139";
     private int port = 9999;
     private Socket socket;
     private InputStream inputStream;

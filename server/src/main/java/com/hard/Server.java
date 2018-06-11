@@ -23,12 +23,12 @@ public class Server {
 
     public void run() {
         init();
-        System.out.println("launched");
+        System.out.println("1. launched");
 
         try {
-            System.out.println("listening...");
+            System.out.println("2. listening...");
             socket = serverSocket.accept();
-            System.out.println("accepted client");
+            System.out.println("3. accepted client");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class Server {
         write(entity.toString());
 
         stop();
-        System.out.println("stopped");
+        System.out.println("4. stopped");
     }
 
     private void init() {
