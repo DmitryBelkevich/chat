@@ -66,8 +66,14 @@ class Client {
     public void run() {
         initStreams();
 
-        String str = readData();
-        write(str);
+        while (true) {
+            String str = readData();
+
+            if (str.equals("/exit"))
+                break;
+
+            write(str);
+        }
     }
 
     private void initStreams() {
@@ -85,6 +91,18 @@ class Client {
     }
 
     public void stop() {
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             socket.close();
         } catch (IOException e) {

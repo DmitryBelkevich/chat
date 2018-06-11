@@ -20,10 +20,19 @@ public class Client {
         init();
         initStreams();
 
-        write("Hello World");
-
+        write("aaa");
         String str = readData();
         System.out.println(str);
+
+        write("bbb");
+        str = readData();
+        System.out.println(str);
+
+        write("ccc");
+        str = readData();
+        System.out.println(str);
+
+        write("/exit");
 
         stop();
     }
@@ -51,6 +60,18 @@ public class Client {
     }
 
     public void stop() {
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             socket.close();
         } catch (IOException e) {
