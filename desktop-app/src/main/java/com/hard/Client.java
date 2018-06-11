@@ -2,9 +2,7 @@ package com.hard;
 
 import com.hard.views.View;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
@@ -14,6 +12,7 @@ public class Client {
     private int port = 9999;
     private Socket socket;
     private InputStream inputStream;
+    private OutputStream outputStream;
 
     public void run() {
         view.run();
@@ -41,6 +40,12 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try {
+            outputStream = socket.getOutputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop() {
@@ -61,5 +66,15 @@ public class Client {
         }
 
         return result;
+    }
+
+    private void write(String str) {
+        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+        try {
+            dataOutputStream.writeUTF(str);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

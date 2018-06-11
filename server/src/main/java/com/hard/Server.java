@@ -1,9 +1,8 @@
 package com.hard;
 
-import com.hard.models.Entity;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,14 +11,8 @@ public class Server {
     private ServerSocket serverSocket;
 
     private Socket socket;
+    private InputStream inputStream;
     private OutputStream outputStream;
-
-    // entities
-    private Entity entity;
-
-    public Server() {
-        entity = new Entity("Hello World");
-    }
 
     public void run() {
         init();
@@ -35,7 +28,7 @@ public class Server {
 
         initStreams();
 
-        write(entity.toString());
+        write("Hello World");
 
         stop();
         System.out.println("4. stopped");
@@ -50,6 +43,12 @@ public class Server {
     }
 
     private void initStreams() {
+        try {
+            inputStream = socket.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             outputStream = socket.getOutputStream();
         } catch (IOException e) {
