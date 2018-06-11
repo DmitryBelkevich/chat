@@ -14,7 +14,12 @@ public class MainController {
 
     @GetMapping(value = "")
     public String main() {
-        String entity =  entityService.getEntity();
+        return "main";
+    }
+
+    @GetMapping(value = "/get")
+    public String get() {
+        String entity = entityService.getEntity();
         System.out.println(entity);
 
         return "main";
