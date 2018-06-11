@@ -27,7 +27,7 @@ public class Client {
         stop();
     }
 
-    public void init() {
+    private void init() {
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
@@ -35,7 +35,7 @@ public class Client {
         }
     }
 
-    public void initStreams() {
+    private void initStreams() {
         try {
             inputStream = socket.getInputStream();
         } catch (IOException e) {
@@ -43,7 +43,15 @@ public class Client {
         }
     }
 
-    public String readData() {
+    public void stop() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String readData() {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String result = null;
         try {
@@ -53,13 +61,5 @@ public class Client {
         }
 
         return result;
-    }
-
-    public void stop() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
