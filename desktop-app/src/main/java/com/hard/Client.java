@@ -20,8 +20,11 @@ public class Client {
 
         init();
         initStreams();
+
         String str = readData();
         System.out.println(str);
+
+        stop();
     }
 
     public void init() {
@@ -56,12 +59,14 @@ public class Client {
             e.printStackTrace();
         }
 
+        return result;
+    }
+
+    public void stop() {
         try {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return result;
     }
 }
