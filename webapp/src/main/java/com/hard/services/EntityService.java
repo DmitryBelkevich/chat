@@ -9,10 +9,13 @@ import java.net.Socket;
 
 @Service
 public class EntityService {
+    private String host = "127.0.0.1";
+    private int port = 9999;
+
     public String getEntity() {
         Socket socket = null;
         try {
-            socket = new Socket("localhost", 9999);
+            socket = new Socket(host, port);
         } catch (IOException e) {
             e.printStackTrace();
         }

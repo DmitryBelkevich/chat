@@ -43,7 +43,7 @@ class Server {
 
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         try {
-            dataOutputStream.writeUTF("Hello World");
+            dataOutputStream.writeUTF(entity.toString());
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
