@@ -9,7 +9,7 @@ import java.net.Socket;
 
 @Service
 public class EntityService {
-    private String host = "127.0.0.1";
+    private String host = "18.219.167.139";
     private int port = 9999;
 
     public String getEntity() {
