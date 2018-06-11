@@ -16,7 +16,7 @@ public class Server {
     private Entity entity;
 
     public Server() {
-        entity = new Entity(100, 100, 100, 100);
+        entity = new Entity("Hello World");
     }
 
     public void run() {
