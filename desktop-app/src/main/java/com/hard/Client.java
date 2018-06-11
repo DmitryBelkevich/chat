@@ -44,13 +44,6 @@ public class Client {
     }
 
     public String readData() {
-        InputStream inputStream = null;
-        try {
-            inputStream = socket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String result = null;
         try {
