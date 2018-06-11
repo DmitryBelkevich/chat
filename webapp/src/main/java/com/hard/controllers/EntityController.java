@@ -17,6 +17,6 @@ public class EntityController {
         String entity = entityService.getEntity();
         System.out.println(entity);
 
-        return "main";
+        return "entities/main";
     }
 }
