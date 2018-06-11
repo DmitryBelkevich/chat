@@ -12,12 +12,14 @@ public class Client {
 
     private String host = "18.219.167.139";
     private int port = 9999;
-    private Socket socket = null;
+    private Socket socket;
+    private InputStream inputStream;
 
     public void run() {
         view.run();
 
         init();
+        initStreams();
         String str = readData();
         System.out.println(str);
     }
@@ -25,6 +27,14 @@ public class Client {
     public void init() {
         try {
             socket = new Socket(host, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initStreams() {
+        try {
+            inputStream = socket.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
         }
