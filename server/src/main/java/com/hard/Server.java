@@ -35,7 +35,7 @@ public class Server {
 
         initStreams();
 
-        write();
+        write(entity.toString());
 
         stop();
         System.out.println("stopped");
@@ -71,10 +71,10 @@ public class Server {
         }
     }
 
-    private void write() {
+    private void write(String str) {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         try {
-            dataOutputStream.writeUTF(entity.toString());
+            dataOutputStream.writeUTF(str);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
