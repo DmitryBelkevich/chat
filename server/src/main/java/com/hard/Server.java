@@ -7,14 +7,13 @@ import java.net.Socket;
 public class Server {
     private ServerSocket serverSocket;
 
-    private Socket socket;
-    private InputStream inputStream;
-    private OutputStream outputStream;
+    private Client client;
 
     public void run() {
         init();
         System.out.println("1. launched");
 
+        Socket socket = null;
         try {
             System.out.println("2. listening...");
             socket = serverSocket.accept();
@@ -23,10 +22,8 @@ public class Server {
             e.printStackTrace();
         }
 
-        initStreams();
-
-        String str = readData();
-        write(str);
+        client = new Client(socket);
+        client.run();
 
         stop();
         System.out.println("4. stopped");
@@ -46,6 +43,33 @@ public class Server {
         }
     }
 
+    public void stop() {
+        client.stop();
+
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class Client {
+    private Socket socket;
+    private InputStream inputStream;
+    private OutputStream outputStream;
+
+    public Client(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void run() {
+        initStreams();
+
+        String str = readData();
+        write(str);
+    }
+
     private void initStreams() {
         try {
             inputStream = socket.getInputStream();
@@ -63,12 +87,6 @@ public class Server {
     public void stop() {
         try {
             socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
