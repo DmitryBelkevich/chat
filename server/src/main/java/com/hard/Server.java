@@ -3,27 +3,40 @@ package com.hard;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class Server {
     private ServerSocket serverSocket;
 
-    private Client client;
+    private Collection<Client> clients;
+
+    public Server() {
+        this.clients = new LinkedList<>();
+    }
 
     public void run() {
         init();
         System.out.println("1. launched");
 
-        Socket socket = null;
-        try {
-            System.out.println("2. listening...");
-            socket = serverSocket.accept();
-            System.out.println("3. accepted client");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        while (true) {
+            Socket socket = null;
+            try {
+                System.out.println("2. listening...");
+                socket = serverSocket.accept();
+                System.out.println("3. accepted client");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        client = new Client(socket);
-        client.run();
+            Client client = new Client(this, socket);
+            clients.add(client);
+            System.out.println("Total clients: " + clients.size());
+            new Thread(client).start();
+
+            if (false)
+                break;
+        }
 
         stop();
         System.out.println("4. stopped");
@@ -44,7 +57,8 @@ public class Server {
     }
 
     public void stop() {
-        client.stop();
+        for (Client client : clients)
+            client.stop();
 
         try {
             serverSocket.close();
@@ -52,17 +66,26 @@ public class Server {
             e.printStackTrace();
         }
     }
+
+    public void remove(Client client) {
+        clients.remove(client);
+        System.out.println(client + " removed. Total clients: " + clients.size());
+    }
 }
 
-class Client {
+class Client implements Runnable {
+    private Server server;
+
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
 
-    public Client(Socket socket) {
+    public Client(Server server, Socket socket) {
+        this.server = server;
         this.socket = socket;
     }
 
+    @Override
     public void run() {
         initStreams();
 
@@ -110,6 +133,8 @@ class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        server.remove(this);
     }
 
     private String read() {

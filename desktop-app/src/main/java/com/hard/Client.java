@@ -20,7 +20,7 @@ public class Client {
     }
 
     public void run() {
-        frameView.run();
+//        frameView.run();
 
         init();
         initStreams();
