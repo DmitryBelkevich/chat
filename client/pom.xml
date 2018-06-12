@@ -16,4 +16,9 @@
 
     <packaging>pom</packaging>
 
+    <modules>
+        <module>webapp</module>
+        <module>desktop-app</module>
+    </modules>
+
 </project>
