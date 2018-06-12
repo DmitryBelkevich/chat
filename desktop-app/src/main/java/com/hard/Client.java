@@ -20,19 +20,30 @@ public class Client {
         init();
         initStreams();
 
-        write("aaa");
-        String str = readData();
-        System.out.println(str);
+        String[] messages = new String[] {
+                "aaa",
+                "bbb",
+                "ccc",
+                "/exit",
+                "ddd",
+                "eee",
+        };
 
-        write("bbb");
-        str = readData();
-        System.out.println(str);
+        int i = 0;
+        while (true) {
+            String str = messages[i];
 
-        write("ccc");
-        str = readData();
-        System.out.println(str);
+            if (str.equals("/exit")) {
+                write(str);
+                break;
+            }
 
-        write("/exit");
+            write(str);
+            String result = readData();
+            System.out.println(result);
+
+            i++;
+        }
 
         stop();
     }
