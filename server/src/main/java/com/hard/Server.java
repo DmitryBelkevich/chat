@@ -67,7 +67,7 @@ class Client {
         initStreams();
 
         while (true) {
-            String str = readData();
+            String str = read();
 
             if (str.equalsIgnoreCase("/exit"))
                 break;
@@ -112,7 +112,7 @@ class Client {
         }
     }
 
-    private String readData() {
+    private String read() {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String result = null;
         try {

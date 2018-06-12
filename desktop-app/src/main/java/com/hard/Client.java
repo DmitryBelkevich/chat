@@ -35,7 +35,7 @@ public class Client {
             }
 
             write(str);
-            String result = readData();
+            String result = read();
             System.out.println(result);
         }
 
@@ -84,7 +84,7 @@ public class Client {
         }
     }
 
-    private String readData() {
+    private String read() {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String result = null;
         try {
