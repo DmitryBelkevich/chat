@@ -3,7 +3,7 @@ package com.hard.views;
 import javax.swing.*;
 import java.awt.*;
 
-public class View {
+public class FrameView {
     public void run() {
         JFrame frame = new JFrame("Client");
 

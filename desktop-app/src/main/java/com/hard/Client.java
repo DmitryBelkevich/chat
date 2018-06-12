@@ -1,13 +1,13 @@
 package com.hard;
 
-import com.hard.views.View;
+import com.hard.views.FrameView;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    private View view;
+    private FrameView frameView;
 
     private String host = "localhost";//"18.219.167.139";
     private int port = 9999;
@@ -16,11 +16,11 @@ public class Client {
     private OutputStream outputStream;
 
     public Client() {
-        view = new View();
+        frameView = new FrameView();
     }
 
     public void run() {
-        view.run();
+        frameView.run();
 
         init();
         initStreams();
