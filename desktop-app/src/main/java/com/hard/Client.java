@@ -28,7 +28,7 @@ public class Client {
         new Thread(() -> {
             while (true) {
                 try {
-                    if (inputStream.available() > 0) {System.out.println("x");
+                    if (inputStream.available() > 0) {
                         String str = read();
 
                         System.out.println(str);
