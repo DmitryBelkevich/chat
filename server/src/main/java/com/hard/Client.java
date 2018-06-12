@@ -1,5 +1,7 @@
 package com.hard;
 
+import com.hard.models.User;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -10,31 +12,34 @@ public class Client implements Runnable {
     private InputStream inputStream;
     private OutputStream outputStream;
 
-    private String username;
+    private User user;
 
     public Client(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
+
+        user = new User();
     }
 
     @Override
     public void run() {
         initStreams();
 
-        username = this.toString().substring(getClass().getName().length() + 1, this.toString().length());
-        server.notifyAllClients("[" + username + "] has joined to the chat");
+        user.setUsername(this.toString().substring(getClass().getName().length() + 1, this.toString().length()));
+
+        server.notifyAllClients("[" + user.getUsername() + "] has joined to the chat");
 
         while (true) {
             String str = read();
 
-            System.out.println("[" + username + "]:" + str);
+            System.out.println("[" + user.getUsername() + "]:" + str);
 
             if (str.equalsIgnoreCase("/exit")) {
-                server.notifyAllClients("[" + username + "] has left the chat");
+                server.notifyAllClients("[" + user.getUsername() + "] has left the chat");
                 break;
             }
 
-            server.notifyAllClients("[" + username + "]:" + str);
+            server.notifyAllClients("[" + user.getUsername() + "]:" + str);
         }
 
         stop();
