@@ -10,6 +10,8 @@ public class Client implements Runnable {
     private InputStream inputStream;
     private OutputStream outputStream;
 
+    private String username;
+
     public Client(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
@@ -19,15 +21,18 @@ public class Client implements Runnable {
     public void run() {
         initStreams();
 
+        username = this.toString().substring(getClass().getName().length() + 1, this.toString().length());
+        server.notifyAllClients("[" + username + "] has joined to the chat");
+
         while (true) {
             String str = read();
 
-            System.out.println("[" + this + "]:" + str);
+            System.out.println("[" + username + "]:" + str);
 
             if (str.equalsIgnoreCase("/exit"))
                 break;
 
-            server.notifyAllClients("[" + this + "]:" + str);
+            server.notifyAllClients("[" + username + "]:" + str);
         }
 
         stop();
