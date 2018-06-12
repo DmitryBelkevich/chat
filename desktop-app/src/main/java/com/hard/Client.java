@@ -16,14 +16,29 @@ public class Client {
     private OutputStream outputStream;
 
     public Client() {
-        frameView = new FrameView();
+        frameView = new FrameView(this);
     }
 
     public void run() {
-//        frameView.run();
+        frameView.run();
 
         init();
         initStreams();
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    if (inputStream.available() > 0) {System.out.println("x");
+                        String str = read();
+
+                        System.out.println(str);
+                        frameView.getMessage(str);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
@@ -32,9 +47,6 @@ public class Client {
 
             if (str.equalsIgnoreCase("/exit"))
                 break;
-
-            String result = read();
-            System.out.println(result);
         }
 
         stop();
@@ -94,7 +106,7 @@ public class Client {
         return result;
     }
 
-    private void write(String str) {
+    public void write(String str) {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         try {
             dataOutputStream.writeUTF(str);

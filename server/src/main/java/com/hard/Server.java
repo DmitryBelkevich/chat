@@ -71,6 +71,11 @@ public class Server {
         clients.remove(client);
         System.out.println(client + " removed. Total clients: " + clients.size());
     }
+
+    public void notifyAllClients(String str) {
+        for (Client client : clients)
+            client.write(str);
+    }
 }
 
 class Client implements Runnable {
@@ -92,10 +97,12 @@ class Client implements Runnable {
         while (true) {
             String str = read();
 
+            System.out.println("[" + this + "]:" + str);
+
             if (str.equalsIgnoreCase("/exit"))
                 break;
 
-            write(str);
+            server.notifyAllClients("[" + this + "]:" + str);
         }
 
         stop();
@@ -149,7 +156,7 @@ class Client implements Runnable {
         return result;
     }
 
-    private void write(String str) {
+    public void write(String str) {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         try {
             dataOutputStream.writeUTF(str);
