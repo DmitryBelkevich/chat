@@ -29,8 +29,10 @@ public class Client implements Runnable {
 
             System.out.println("[" + username + "]:" + str);
 
-            if (str.equalsIgnoreCase("/exit"))
+            if (str.equalsIgnoreCase("/exit")) {
+                server.notifyAllClients("[" + username + "] has left the chat");
                 break;
+            }
 
             server.notifyAllClients("[" + username + "]:" + str);
         }
