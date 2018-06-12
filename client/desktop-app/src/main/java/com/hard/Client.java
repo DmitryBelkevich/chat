@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Client {
+    // views
+    private Collection<View> views;
+
     private String host = "localhost";//"18.219.167.139";
     private int port = 9999;
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
-
-    // views
-    private Collection<View> views;
 
     public Client() {
         views = new ArrayList<>();
