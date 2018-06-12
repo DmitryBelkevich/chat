@@ -16,7 +16,7 @@ public class ConsoleView extends View {
 
             while (scanner.hasNextLine()) {
                 String str = scanner.nextLine();
-                client.write(str);
+                sendMessage(str);
 
                 if (str.equalsIgnoreCase("/exit"))
                     break;
