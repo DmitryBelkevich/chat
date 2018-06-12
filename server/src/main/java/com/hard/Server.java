@@ -162,11 +162,9 @@ class Client implements Runnable {
         try {
             dataOutputStream.writeUTF(str);
             dataOutputStream.flush();
-        } catch (SocketException e) {
-            e.printStackTrace();
-            stop();
         } catch (IOException e) {
             e.printStackTrace();
+            stop();
         }
     }
 }
