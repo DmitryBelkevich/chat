@@ -28,13 +28,11 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String str = scanner.nextLine();
-
-            if (str.equalsIgnoreCase("/exit")) {
-                write(str);
-                break;
-            }
-
             write(str);
+
+            if (str.equalsIgnoreCase("/exit"))
+                break;
+
             String result = read();
             System.out.println(result);
         }
