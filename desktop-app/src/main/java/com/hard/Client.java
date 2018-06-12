@@ -25,7 +25,7 @@ public class Client {
         while (scanner.hasNextLine()) {
             String str = scanner.nextLine();
 
-            if (str.equals("/exit")) {
+            if (str.equalsIgnoreCase("/exit")) {
                 write(str);
                 break;
             }

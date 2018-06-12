@@ -69,7 +69,7 @@ class Client {
         while (true) {
             String str = readData();
 
-            if (str.equals("/exit"))
+            if (str.equalsIgnoreCase("/exit"))
                 break;
 
             write(str);
