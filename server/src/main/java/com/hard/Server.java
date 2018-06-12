@@ -3,6 +3,7 @@ package com.hard;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -161,6 +162,9 @@ class Client implements Runnable {
         try {
             dataOutputStream.writeUTF(str);
             dataOutputStream.flush();
+        } catch (SocketException e) {
+            e.printStackTrace();
+            stop();
         } catch (IOException e) {
             e.printStackTrace();
         }
