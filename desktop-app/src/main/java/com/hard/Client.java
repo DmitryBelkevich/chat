@@ -7,13 +7,17 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    private View view = new View();
+    private View view;
 
     private String host = "localhost";//"18.219.167.139";
     private int port = 9999;
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
+
+    public Client() {
+        view = new View();
+    }
 
     public void run() {
         view.run();
