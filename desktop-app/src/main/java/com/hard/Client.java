@@ -8,7 +8,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Scanner;
 
 public class Client {
     private Collection<View> views;
@@ -33,27 +32,19 @@ public class Client {
         init();
         initStreams();
 
-        new Thread(() -> {
-            while (true) {
-                try {
-                    if (inputStream.available() > 0) {
-                        String str = read();
+        while (true) {
+            try {
+                if (inputStream.available() > 0) {
+                    String str = read();
 
-                        notifyAllViews(str);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    notifyAllViews(str);
                 }
+
+                if (false)
+                    break;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();
-
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) {
-            String str = scanner.nextLine();
-            write(str);
-
-            if (str.equalsIgnoreCase("/exit"))
-                break;
         }
 
         stop();

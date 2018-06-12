@@ -2,6 +2,8 @@ package com.hard.views;
 
 import com.hard.Client;
 
+import java.util.Scanner;
+
 public class ConsoleView extends View {
     public ConsoleView(Client client) {
         super(client);
@@ -9,7 +11,17 @@ public class ConsoleView extends View {
 
     @Override
     public void run() {
+        new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
 
+            while (scanner.hasNextLine()) {
+                String str = scanner.nextLine();
+                client.write(str);
+
+                if (str.equalsIgnoreCase("/exit"))
+                    break;
+            }
+        }).start();
     }
 
     @Override
