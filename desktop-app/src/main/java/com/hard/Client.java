@@ -1,5 +1,6 @@
 package com.hard;
 
+import com.hard.views.ConsoleView;
 import com.hard.views.FrameView;
 
 import java.io.*;
@@ -7,6 +8,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
+    private ConsoleView consoleView;
     private FrameView frameView;
 
     private String host = "localhost";//"18.219.167.139";
@@ -16,6 +18,7 @@ public class Client {
     private OutputStream outputStream;
 
     public Client() {
+        consoleView = new ConsoleView(this);
         frameView = new FrameView(this);
     }
 
@@ -31,7 +34,7 @@ public class Client {
                     if (inputStream.available() > 0) {
                         String str = read();
 
-                        System.out.println(str);
+                        consoleView.getMessage(str);
                         frameView.getMessage(str);
                     }
                 } catch (IOException e) {
