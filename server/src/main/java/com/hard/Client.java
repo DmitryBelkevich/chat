@@ -12,6 +12,7 @@ public class Client implements Runnable {
     private InputStream inputStream;
     private OutputStream outputStream;
 
+    // models
     private User user;
 
     public Client(Server server, Socket socket) {
