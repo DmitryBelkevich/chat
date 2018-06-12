@@ -2,14 +2,16 @@ package com.hard;
 
 import com.hard.views.ConsoleView;
 import com.hard.views.FrameView;
+import com.hard.views.View;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class Client {
-    private ConsoleView consoleView;
-    private FrameView frameView;
+    private Collection<View> views;
 
     private String host = "localhost";//"18.219.167.139";
     private int port = 9999;
@@ -18,12 +20,15 @@ public class Client {
     private OutputStream outputStream;
 
     public Client() {
-        consoleView = new ConsoleView(this);
-        frameView = new FrameView(this);
+        views = new ArrayList<>();
+
+        views.add(new ConsoleView(this));
+        views.add(new FrameView(this));
     }
 
     public void run() {
-        frameView.run();
+        for (View view : views)
+            view.run();
 
         init();
         initStreams();
@@ -34,8 +39,7 @@ public class Client {
                     if (inputStream.available() > 0) {
                         String str = read();
 
-                        consoleView.getMessage(str);
-                        frameView.getMessage(str);
+                        notifyAllViews(str);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -117,5 +121,10 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void notifyAllViews(String str) {
+        for (View view : views)
+            view.getMessage(str);
     }
 }

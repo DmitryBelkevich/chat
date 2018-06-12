@@ -2,17 +2,17 @@ package com.hard.views;
 
 import com.hard.Client;
 
-public class ConsoleView {
-    private Client client;
-
+public class ConsoleView extends View {
     public ConsoleView(Client client) {
-        this.client = client;
+        super(client);
     }
 
+    @Override
     public void run() {
 
     }
 
+    @Override
     public void getMessage(String str) {
         System.out.println(str);
     }

@@ -9,17 +9,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class FrameView {
-    private Client client;
-
+public class FrameView extends View {
     private JTextArea messagesTextArea;
     private JScrollPane scrollPane;
     private JTextField inputTextField;
 
     public FrameView(Client client) {
-        this.client = client;
+        super(client);
     }
 
+    @Override
     public void run() {
         createGui();
     }
@@ -66,6 +65,7 @@ public class FrameView {
         frame.addWindowListener(new CloseWindowListener());
     }
 
+    @Override
     public void getMessage(String str) {
         messagesTextArea.append(str + "\n");
 
