@@ -75,6 +75,7 @@ public class FrameView extends View {
         verticalScrollBar.setValue(maximum);
     }
 
+    @Override
     public void sendMessage(String str) {
         client.write(str);
 

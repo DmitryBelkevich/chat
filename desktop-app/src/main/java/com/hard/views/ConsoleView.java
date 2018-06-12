@@ -16,4 +16,9 @@ public class ConsoleView extends View {
     public void getMessage(String str) {
         System.out.println(str);
     }
+
+    @Override
+    public void sendMessage(String str) {
+        client.write(str);
+    }
 }

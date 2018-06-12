@@ -12,4 +12,6 @@ public abstract class View {
     public abstract void run();
 
     public abstract void getMessage(String str);
+
+    public abstract void sendMessage(String str);
 }
