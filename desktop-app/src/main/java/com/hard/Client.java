@@ -4,6 +4,7 @@ import com.hard.views.View;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
     private View view = new View();
@@ -20,18 +21,9 @@ public class Client {
         init();
         initStreams();
 
-        String[] messages = new String[] {
-                "aaa",
-                "bbb",
-                "ccc",
-                "/exit",
-                "ddd",
-                "eee",
-        };
-
-        int i = 0;
-        while (true) {
-            String str = messages[i];
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            String str = scanner.nextLine();
 
             if (str.equals("/exit")) {
                 write(str);
@@ -41,8 +33,6 @@ public class Client {
             write(str);
             String result = readData();
             System.out.println(result);
-
-            i++;
         }
 
         stop();
