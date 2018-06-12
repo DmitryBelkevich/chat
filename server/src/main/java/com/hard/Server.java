@@ -74,6 +74,8 @@ class Client {
 
             write(str);
         }
+
+        stop();
     }
 
     private void initStreams() {
