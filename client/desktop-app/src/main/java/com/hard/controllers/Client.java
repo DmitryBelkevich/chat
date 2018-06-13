@@ -33,7 +33,6 @@ public class Client {
 
     public void connect() {
         clientService.init();
-        clientService.initStreams();
     }
 
     public void disconnect() {

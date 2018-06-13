@@ -16,9 +16,7 @@ public class ClientService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void initStreams() {
         try {
             inputStream = socket.getInputStream();
         } catch (IOException e) {
