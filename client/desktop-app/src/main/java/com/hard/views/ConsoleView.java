@@ -31,6 +31,6 @@ public class ConsoleView extends View {
 
     @Override
     public void sendMessage(String str) {
-        client.write(str);
+        client.sendMessage(str);
     }
 }

@@ -28,7 +28,7 @@ public class Client {
         connect();
 
         while (true) {
-            String str = read();
+            String str = getMessage();
 
             notifyAllViews(str);
         }
@@ -49,11 +49,11 @@ public class Client {
 //        clientService.stop(); // Exception
     }
 
-    private String read() {
+    private String getMessage() {
         return clientService.read();
     }
 
-    public void write(String str) {
+    public void sendMessage(String str) {
         clientService.write(str);
     }
 }
