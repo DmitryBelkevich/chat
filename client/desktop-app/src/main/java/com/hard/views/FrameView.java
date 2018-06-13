@@ -51,7 +51,7 @@ public class FrameView extends View {
         messagesTextArea.setEditable(false);
 
         scrollPane = new JScrollPane(messagesTextArea);
-        inputTextField = new JTextField(10);
+        inputTextField = new JTextField(20);
         JButton sendButton = new JButton("send");
 
         panel.add(scrollPane);
