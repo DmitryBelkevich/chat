@@ -61,7 +61,7 @@ public class ClientService {
         }
     }
 
-    public void stop() {
+    public void destroy() {
         try {
             inputStream.close();
         } catch (IOException e) {

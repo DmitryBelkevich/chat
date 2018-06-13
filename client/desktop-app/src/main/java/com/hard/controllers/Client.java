@@ -37,7 +37,7 @@ public class Client {
 
     public void disconnect() {
         clientService.write("/exit");
-//        clientService.stop(); // Exception
+//        clientService.destroy(); // Exception
     }
 
     public String getMessage() {
