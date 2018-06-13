@@ -1,4 +1,4 @@
-package com.hard;
+package com.hard.controllers;
 
 import com.hard.services.ClientService;
 import com.hard.views.ConsoleView;

@@ -1,6 +1,6 @@
 package com.hard.views;
 
-import com.hard.Client;
+import com.hard.controllers.Client;
 
 public abstract class View {
     protected Client client;

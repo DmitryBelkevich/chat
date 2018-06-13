@@ -1,6 +1,6 @@
 package com.hard.views;
 
-import com.hard.Client;
+import com.hard.controllers.Client;
 
 import javax.swing.*;
 import java.awt.*;
