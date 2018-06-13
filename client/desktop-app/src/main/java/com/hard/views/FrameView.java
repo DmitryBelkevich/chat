@@ -101,7 +101,7 @@ public class FrameView extends View {
     private class CloseWindowListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
-            sendMessage("/exit");
+            client.disconnect();
         }
     }
 }
