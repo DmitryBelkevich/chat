@@ -36,27 +36,21 @@ public class ClientService {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String result = null;
 
-        while (true) {
-            try {
-                if (inputStream.available() > 0) {
-                    try {
-                        result = dataInputStream.readUTF();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return result;
+        try {
+            while (inputStream.available() <= 0) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            result = dataInputStream.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return result;
     }
 
     public void write(String str) {
