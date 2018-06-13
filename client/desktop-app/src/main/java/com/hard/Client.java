@@ -25,8 +25,7 @@ public class Client {
         for (View view : views)
             view.run();
 
-        clientService.init();
-        clientService.initStreams();
+        connect();
 
         while (true) {
             String str = read();
@@ -35,7 +34,17 @@ public class Client {
         }
     }
 
-    public void stop() {
+    public void notifyAllViews(String str) {
+        for (View view : views)
+            view.getMessage(str);
+    }
+
+    public void connect() {
+        clientService.init();
+        clientService.initStreams();
+    }
+
+    public void disconnect() {
         clientService.stop();
     }
 
@@ -45,10 +54,5 @@ public class Client {
 
     public void write(String str) {
         clientService.write(str);
-    }
-
-    public void notifyAllViews(String str) {
-        for (View view : views)
-            view.getMessage(str);
     }
 }
