@@ -24,14 +24,6 @@ public class Client {
     public void run() {
         for (View view : views)
             view.run();
-
-        connect();
-
-        while (true) {
-            String str = getMessage();
-
-            notifyAllViews(str);
-        }
     }
 
     public void notifyAllViews(String str) {
@@ -49,7 +41,7 @@ public class Client {
 //        clientService.stop(); // Exception
     }
 
-    private String getMessage() {
+    public String getMessage() {
         return clientService.read();
     }
 

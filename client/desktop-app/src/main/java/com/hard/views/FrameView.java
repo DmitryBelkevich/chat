@@ -21,6 +21,14 @@ public class FrameView extends View {
     @Override
     public void run() {
         createGui();
+
+        client.connect();
+
+        while (true) {
+            String str = client.getMessage();
+
+            client.notifyAllViews(str);
+        }
     }
 
     public void createGui() {
