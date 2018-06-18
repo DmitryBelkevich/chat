@@ -17,7 +17,18 @@ public class HandshakeService {
     public void handshake(InputStream inputStream, OutputStream outputStream) {
         String requestHeaders = getRequestHeaders(inputStream);
 
-        String responseHeaders = getResponseHeaders(requestHeaders);
+        Matcher getMatcher = Pattern.compile("^GET").matcher(requestHeaders);
+        if (!getMatcher.find())
+            throw new RuntimeException("Not found GET header");
+
+        Matcher secWebSocketKeyMatcher = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(requestHeaders);
+        if (!secWebSocketKeyMatcher.find())
+            throw new RuntimeException("Not found Sec-WebSocket-Key header");
+
+        String secWebSocketKey = secWebSocketKeyMatcher.group(1);
+        String secWebSocketAccept = evaluateSecWebSocketAccept(secWebSocketKey);
+
+        String responseHeaders = generateResponseHeaders(secWebSocketAccept);
 
         try {
             outputStream.write(responseHeaders.getBytes());
@@ -35,18 +46,7 @@ public class HandshakeService {
         return requestHeaders;
     }
 
-    private String getResponseHeaders(String requestHeaders) {
-        Matcher getMatcher = Pattern.compile("^GET").matcher(requestHeaders);
-        if (!getMatcher.find())
-            throw new RuntimeException("Not found GET header");
-
-        Matcher secWebSocketKeyMatcher = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(requestHeaders);
-        if (!secWebSocketKeyMatcher.find())
-            throw new RuntimeException("Not found Sec-WebSocket-Key header");
-
-        String secWebSocketKey = secWebSocketKeyMatcher.group(1);
-        String secWebSocketAccept = evaluateSecWebSocketAccept(secWebSocketKey);
-
+    private String generateResponseHeaders(String secWebSocketAccept) {
         String responseHeaders = "HTTP/1.1 101 Switching Protocols" + CRLF
                 + "Connection: Upgrade" + CRLF
                 + "Upgrade: websocket" + CRLF
