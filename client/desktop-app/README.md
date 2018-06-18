@@ -2,4 +2,4 @@
 
 **on Windows:**
 
-java -classpath desktop-app-1.0-SNAPSHOT.jar com.hard.ClientLoader
+java -classpath desktop-app-1.0-SNAPSHOT.jar com.hard.DesktopClientLoader
