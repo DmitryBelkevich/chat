@@ -13,8 +13,8 @@ public class WebClient extends Client {
     }
 
     public String read() {
-        while (true) {
-            try {
+        try {
+            while (true) {
                 if (inputStream.available() > 0) {
                     byte[] buffer = new byte[inputStream.available()];
 
@@ -26,16 +26,18 @@ public class WebClient extends Client {
 
                     return new String(message);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return null;
     }
 
     public void write(String str) {
