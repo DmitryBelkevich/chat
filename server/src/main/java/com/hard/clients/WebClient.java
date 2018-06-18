@@ -3,7 +3,6 @@ package com.hard.clients;
 import com.hard.Server;
 import com.hard.utils.webSockets.Decoder;
 import com.hard.utils.webSockets.Frame;
-import com.hard.utils.webSockets.Handshaker;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -11,12 +10,6 @@ import java.net.Socket;
 public class WebClient extends Client {
     public WebClient(Server server, Socket socket) {
         super(server, socket);
-    }
-
-    @Override
-    public void run() {
-        Handshaker.handshake(inputStream, outputStream);
-        super.run();
     }
 
     public String read() {

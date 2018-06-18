@@ -3,6 +3,7 @@ package com.hard;
 import com.hard.clients.Client;
 import com.hard.clients.SimpleClient;
 import com.hard.clients.WebClient;
+import com.hard.services.HandshakeService;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -15,8 +16,11 @@ public class Server {
 
     private Collection<Client> clients;
 
+    private HandshakeService handshakeService;
+
     public Server() {
         this.clients = new LinkedList<>();
+        handshakeService = new HandshakeService();
     }
 
     public void run() {
@@ -33,9 +37,15 @@ public class Server {
                 e.printStackTrace();
             }
 
+            try {
+                handshakeService.handshake(socket.getInputStream(), socket.getOutputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             Client client = null;
 
-            switch (1) {
+            switch (2) {
                 case 1:
                     client = new SimpleClient(this, socket);
                     break;

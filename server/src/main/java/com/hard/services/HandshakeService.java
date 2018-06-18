@@ -1,4 +1,4 @@
-package com.hard.utils.webSockets;
+package com.hard.services;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,10 +11,10 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Handshaker {
+public class HandshakeService {
     private static final String CRLF = "\r\n";
 
-    public static void handshake(InputStream inputStream, OutputStream outputStream) {
+    public void handshake(InputStream inputStream, OutputStream outputStream) {
         Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter(CRLF + CRLF);
 
         String requestHeaders = scanner.next();
@@ -35,7 +35,7 @@ public class Handshaker {
         }
     }
 
-    private static String getResponseHeaders(String requestHeaders) {
+    private String getResponseHeaders(String requestHeaders) {
         Matcher getMatcher = Pattern.compile("^GET").matcher(requestHeaders);
 
         if (!getMatcher.find())
@@ -56,7 +56,7 @@ public class Handshaker {
         return responseHeaders;
     }
 
-    private static String evaluateSecWebSocketAccept(String secWebSocketKey) {
+    private String evaluateSecWebSocketAccept(String secWebSocketKey) {
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("SHA-1");
