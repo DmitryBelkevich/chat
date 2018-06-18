@@ -21,11 +21,7 @@ public class HandshakeService {
         if (!getMatcher.find())
             throw new RuntimeException("Not found GET header");
 
-        Matcher secWebSocketKeyMatcher = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(requestHeaders);
-        if (!secWebSocketKeyMatcher.find())
-            throw new RuntimeException("Not found Sec-WebSocket-Key header");
-
-        String secWebSocketKey = secWebSocketKeyMatcher.group(1);
+        String secWebSocketKey = getSecWebSocketKey(requestHeaders);
         String secWebSocketAccept = evaluateSecWebSocketAccept(secWebSocketKey);
 
         String responseHeaders = generateResponseHeaders(secWebSocketAccept);
@@ -44,6 +40,16 @@ public class HandshakeService {
         String requestHeaders = scanner.next();
 
         return requestHeaders;
+    }
+
+    private String getSecWebSocketKey(String requestHeaders) {
+        Matcher secWebSocketKeyMatcher = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(requestHeaders);
+        if (!secWebSocketKeyMatcher.find())
+            throw new RuntimeException("Not found Sec-WebSocket-Key header");
+
+        String secWebSocketKey = secWebSocketKeyMatcher.group(1);
+
+        return secWebSocketKey;
     }
 
     private String generateResponseHeaders(String secWebSocketAccept) {
