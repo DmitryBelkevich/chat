@@ -37,15 +37,19 @@ public class Server {
                 e.printStackTrace();
             }
 
+            int type = 1;
             try {
                 handshakeService.handshake(socket.getInputStream(), socket.getOutputStream());
+                type = 2;
+            } catch (RuntimeException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             Client client = null;
 
-            switch (2) {
+            switch (type) {
                 case 1:
                     client = new SimpleClient(this, socket);
                     break;
@@ -55,7 +59,7 @@ public class Server {
             }
 
             clients.add(client);
-            System.out.println("Total clients: " + clients.size());
+            System.out.println("clients: " + clients.size() + " " + clients);
             new Thread(client).start();
 
             if (false)
