@@ -64,7 +64,7 @@ public class FrameView extends View {
         inputTextField.requestFocus();
 
         /**
-         * Listeners
+         * add listeners
          */
 
         ActionListener actionListener = new SendActionListener();
@@ -92,7 +92,7 @@ public class FrameView extends View {
     }
 
     /**
-     * Listeners
+     * listeners
      */
 
     private class SendActionListener implements ActionListener {
