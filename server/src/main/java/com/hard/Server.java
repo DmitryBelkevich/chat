@@ -33,7 +33,17 @@ public class Server {
                 e.printStackTrace();
             }
 
-            Client client = new WebClient(this, socket);
+            Client client = null;
+
+            switch (1) {
+                case 1:
+                    client = new SimpleClient(this, socket);
+                    break;
+                case 2:
+                    client = new WebClient(this, socket);
+                    break;
+            }
+
             clients.add(client);
             System.out.println("Total clients: " + clients.size());
             new Thread(client).start();
