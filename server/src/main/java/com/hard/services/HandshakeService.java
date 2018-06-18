@@ -15,24 +15,24 @@ public class HandshakeService {
     private static final String CRLF = "\r\n";
 
     public void handshake(InputStream inputStream, OutputStream outputStream) {
-        Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter(CRLF + CRLF);
+        String requestHeaders = getRequestHeaders(inputStream);
 
-        String requestHeaders = scanner.next();
         String responseHeaders = getResponseHeaders(requestHeaders);
 
-        byte[] responseHeadersBytes = new byte[0];
         try {
-            responseHeadersBytes = responseHeaders.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            outputStream.write(responseHeadersBytes, 0, responseHeadersBytes.length);
+            outputStream.write(responseHeaders.getBytes());
             outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getRequestHeaders(InputStream inputStream) {
+        Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter(CRLF + CRLF);
+
+        String requestHeaders = scanner.next();
+
+        return requestHeaders;
     }
 
     private String getResponseHeaders(String requestHeaders) {
