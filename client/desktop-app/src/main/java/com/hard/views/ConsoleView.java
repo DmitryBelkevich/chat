@@ -1,12 +1,12 @@
 package com.hard.views;
 
-import com.hard.controllers.Client;
+import com.hard.controllers.ChatController;
 
 import java.util.Scanner;
 
 public class ConsoleView extends View {
-    public ConsoleView(Client client) {
-        super(client);
+    public ConsoleView(ChatController chatController) {
+        super(chatController);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class ConsoleView extends View {
 
     @Override
     public void sendMessage(String str) {
-        client.sendMessage(str);
+        chatController.sendMessage(str);
     }
 }

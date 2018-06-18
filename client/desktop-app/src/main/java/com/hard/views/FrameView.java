@@ -1,6 +1,6 @@
 package com.hard.views;
 
-import com.hard.controllers.Client;
+import com.hard.controllers.ChatController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,27 +17,27 @@ public class FrameView extends View {
     private JScrollPane messagesOutputScrollPane;
     private JScrollPane usersOutputScrollPane;
 
-    public FrameView(Client client) {
-        super(client);
+    public FrameView(ChatController chatController) {
+        super(chatController);
     }
 
     @Override
     public void run() {
         createGui();
 
-        client.connect();
+        chatController.connect();
 
-        client.sendMessage("\r\n\r\n"); // handshake
+        chatController.sendMessage("\r\n\r\n"); // handshake
 
         while (true) {
-            String str = client.getMessage();
+            String str = chatController.getMessage();
 
-            client.notifyAllViews(str);
+            chatController.notifyAllViews(str);
         }
     }
 
     public void createGui() {
-        JFrame frame = new JFrame("Client");
+        JFrame frame = new JFrame("ChatController");
 
         frame.setSize(640, 480);
         frame.setLocationRelativeTo(null);
@@ -45,10 +45,6 @@ public class FrameView extends View {
         frame.setResizable(false);
 
         frame.setLayout(new GridBagLayout());
-
-//        JPanel panel = new JPanel();
-//        panel.setPreferredSize(new Dimension(640 - 10, 480));
-//        frame.setContentPane(panel);
 
         /**
          * components
@@ -122,7 +118,7 @@ public class FrameView extends View {
 
     @Override
     public void sendMessage(String str) {
-        client.sendMessage(str);
+        chatController.sendMessage(str);
 
         messagesInputTextArea.requestFocus();
         messagesInputTextArea.setText(null);
@@ -213,7 +209,7 @@ public class FrameView extends View {
     private class CloseWindowListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
-            client.disconnect();
+            chatController.disconnect();
         }
     }
 }

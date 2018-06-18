@@ -3,7 +3,7 @@ package com.hard.services;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientService {
+public class ChatService {
     private String host = "localhost";//"18.219.167.139";
     private int port = 9999;
     private Socket socket;
