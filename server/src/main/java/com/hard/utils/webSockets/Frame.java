@@ -1,4 +1,4 @@
-package com.hard.utils;
+package com.hard.utils.webSockets;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

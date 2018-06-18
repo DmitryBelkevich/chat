@@ -1,4 +1,4 @@
-package com.hard.utils;
+package com.hard.utils.webSockets;
 
 public class Decoder {
     public static byte[] decode(byte[] payload, byte[] key) {

@@ -1,4 +1,4 @@
-package com.hard.utils;
+package com.hard.utils.webSockets;
 
 public class Encoder {
     public static byte[] encode(byte[] payload, byte[] key) {
