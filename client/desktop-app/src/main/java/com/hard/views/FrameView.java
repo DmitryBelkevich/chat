@@ -24,6 +24,8 @@ public class FrameView extends View {
 
         client.connect();
 
+        client.sendMessage("\r\n\r\n"); // handshake
+
         while (true) {
             String str = client.getMessage();
 
