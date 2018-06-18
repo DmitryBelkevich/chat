@@ -144,6 +144,31 @@ public class FrameView extends View {
     }
 
     private class KeyListener1 implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+
+            if (keyCode == KeyEvent.VK_ENTER) {
+                String str = messagesInputTextArea.getText();
+                if (str.equals(""))
+                    return;
+
+                sendMessage(str);
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
+    }
+
+    private class KeyListener2 implements KeyListener {
         private final Set<Integer> pressed = new HashSet<>();
 
         @Override
