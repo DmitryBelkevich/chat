@@ -18,7 +18,7 @@ public class ChatController {
 
     public void disconnect() {
         chatService.write("/exit");
-//        chatService.destroy(); // Exception
+//        chatService.close(); // Exception
     }
 
     public String getMessage() {

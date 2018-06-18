@@ -61,7 +61,7 @@ public class ChatService {
         }
     }
 
-    public void destroy() {
+    public void close() {
         try {
             inputStream.close();
         } catch (IOException e) {
