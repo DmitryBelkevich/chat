@@ -1,9 +1,12 @@
 package com.hard;
 
+import com.hard.clients.Client;
+import com.hard.clients.SimpleClient;
+import com.hard.clients.WebClient;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -30,7 +33,7 @@ public class Server {
                 e.printStackTrace();
             }
 
-            Client client = new Client(this, socket);
+            Client client = new WebClient(this, socket);
             clients.add(client);
             System.out.println("Total clients: " + clients.size());
             new Thread(client).start();

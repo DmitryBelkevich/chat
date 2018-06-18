@@ -1,31 +1,34 @@
-package com.hard;
+package com.hard.clients;
 
+import com.hard.Server;
 import com.hard.models.User;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
-public class Client implements Runnable {
-    private Server server;
+public abstract class Client implements Runnable {
+    protected Server server;
 
-    private Socket socket;
-    private InputStream inputStream;
-    private OutputStream outputStream;
+    protected Socket socket;
+    protected InputStream inputStream;
+    protected OutputStream outputStream;
 
     // models
-    private User user;
+    protected User user;
 
     public Client(Server server, Socket socket) {
         this.server = server;
         this.socket = socket;
 
         user = new User();
+
+        initStreams();
     }
 
     @Override
     public void run() {
-        initStreams();
-
         user.setUsername(this.toString().substring(getClass().getName().length() + 1, this.toString().length()));
 
         server.notifyAllClients("[" + user.getUsername() + "] has joined to the chat");
@@ -82,26 +85,7 @@ public class Client implements Runnable {
         server.remove(this);
     }
 
-    private String read() {
-        DataInputStream dataInputStream = new DataInputStream(inputStream);
-        String result = null;
-        try {
-            result = dataInputStream.readUTF();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public abstract String read();
 
-        return result;
-    }
-
-    public void write(String str) {
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-        try {
-            dataOutputStream.writeUTF(str);
-            dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            stop();
-        }
-    }
+    public abstract void write(String str);
 }
