@@ -1,8 +1,11 @@
-<div id="content"></div>
+<textarea id="messagesTextArea" class="form-control" rows="20"></textarea>
 
-<form class="form" role="form">
-    <div id="">
-        <input id="inputField" type="text" class="form-control" placeholder="type message"/>
-        <button id="sendButton" type="button" class="btn btn-default">send</button>
+<div class="input-group">
+    <textarea id="inputTextArea" class="form-control" placeholder="type message"></textarea>
+
+    <div class="input-group-append">
+        <button id="sendButton" type="button" class="btn btn-dark">send</button>
     </div>
-</form>
+</div>
+
+<script src="/resources/js/handlers.js"></script>
