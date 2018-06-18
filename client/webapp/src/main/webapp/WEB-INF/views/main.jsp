@@ -1,37 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<spring:url value="/resources/css/main.css" var="mainCss" />
+
 <html>
 <head>
     <title>Title</title>
+    <link href="${mainCss}" rel="stylesheet" />
 </head>
 <body>
-<h1>Hello World</h1>
 
-<script>
-    var host = "127.0.0.1";
-    var port = "9999";
-    var socket = new WebSocket("ws://" + host + ":" + port);
+<div id="content"></div>
+<form class="form" role="form">
+    <div id="">
+        <input id="inputField" type="text" class="form-control" placeholder="type message" />
+        <button id="sendButton" type="button" class="btn btn-default">send</button>
+    </div>
+</form>
 
-    socket.onopen = function() {
-        alert("Соединение установлено.");
-    };
-
-    socket.onclose = function(event) {
-        if (event.wasClean) {
-            alert('Соединение закрыто чисто');
-        } else {
-            alert('Обрыв соединения'); // например, "убит" процесс сервера
-        }
-        alert('Код: ' + event.code + ' причина: ' + event.reason);
-    };
-
-    socket.onmessage = function(event) {
-        alert("Получены данные " + event.data);
-    };
-
-    socket.onerror = function(error) {
-        alert("Ошибка " + error.message);
-    };
-</script>
+<script src="/resources/js/main.js"></script>
 
 </body>
 </html>
