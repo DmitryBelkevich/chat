@@ -37,12 +37,12 @@ public class HandshakeService {
 
     private String getResponseHeaders(String requestHeaders) {
         Matcher getMatcher = Pattern.compile("^GET").matcher(requestHeaders);
-
         if (!getMatcher.find())
-            return null;
+            throw new RuntimeException("Not found GET header");
 
         Matcher secWebSocketKeyMatcher = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(requestHeaders);
-        secWebSocketKeyMatcher.find();
+        if (!secWebSocketKeyMatcher.find())
+            throw new RuntimeException("Not found Sec-WebSocket-Key header");
 
         String secWebSocketKey = secWebSocketKeyMatcher.group(1);
         String secWebSocketAccept = evaluateSecWebSocketAccept(secWebSocketKey);
@@ -74,10 +74,8 @@ public class HandshakeService {
         }
         byte[] sha1Bytes = messageDigest.digest(concatenatedStringBytes);
 
-        Base64.Encoder encoder = Base64.getEncoder();
+        String secWebSocketAccept = Base64.getEncoder().encodeToString(sha1Bytes);
 
-        byte[] secWebSocketAcceptBytes = encoder.encode(sha1Bytes);
-
-        return new String(secWebSocketAcceptBytes);
+        return secWebSocketAccept;
     }
 }
