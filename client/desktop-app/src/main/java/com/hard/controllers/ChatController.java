@@ -12,13 +12,13 @@ public class ChatController {
         chatService = new ChatService();
     }
 
-    public void connect() {
-        chatService.init();
+    public void connect(String host, int port) {
+        chatService.connect(host, port);
     }
 
     public void disconnect() {
         chatService.write("/exit");
-//        chatService.close(); // Exception
+//        chatService.disconnect(); // Exception
     }
 
     public String getMessage() {

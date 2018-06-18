@@ -25,7 +25,7 @@ public class FrameView extends View {
     public void run() {
         createGui();
 
-        chatController.connect();
+        chatController.connect("localhost", 9999);
 
         chatController.sendMessage("\r\n\r\n"); // handshake
 

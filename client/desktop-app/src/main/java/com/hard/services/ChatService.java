@@ -4,13 +4,11 @@ import java.io.*;
 import java.net.Socket;
 
 public class ChatService {
-    private String host = "localhost";//"18.219.167.139";
-    private int port = 9999;
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;
 
-    public void init() {
+    public void connect(String host, int port) {
         try {
             socket = new Socket(host, port);
         } catch (IOException e) {
@@ -61,7 +59,7 @@ public class ChatService {
         }
     }
 
-    public void close() {
+    public void disconnect() {
         try {
             inputStream.close();
         } catch (IOException e) {
