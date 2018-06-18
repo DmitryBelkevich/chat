@@ -16,7 +16,8 @@ socket.onclose = function(event) {
 };
 
 socket.onmessage = function(event) {
-    alert("Получены данные " + event.data);
+    // alert("Получены данные " + event.data);
+    getMessage(event.data);
 };
 
 socket.onerror = function(error) {

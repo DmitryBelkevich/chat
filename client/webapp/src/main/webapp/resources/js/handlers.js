@@ -11,7 +11,7 @@ var inputTextArea = document.getElementById("inputTextArea");
  */
 
 var sendMessage = function (str) {
-    // to send a message by socket
+    socket.send(str);
 
     inputTextArea.focus();
     inputTextArea.value = "";
