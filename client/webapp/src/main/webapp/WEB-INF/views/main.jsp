@@ -2,24 +2,22 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<spring:url value="/resources/css/main.css" var="mainCss" />
+<spring:url value="/resources/css/main.css" var="mainCss"/>
+<spring:url value="/resources/js/main.js" var="mainJs"/>
 
 <html>
 <head>
     <title>Title</title>
-    <link href="${mainCss}" rel="stylesheet" />
+
+    <%-- css --%>
+    <link href="${mainCss}" rel="stylesheet"/>
+
+    <%-- js --%>
+    <script src="${mainJs}"></script>
 </head>
 <body>
 
-<div id="content"></div>
-<form class="form" role="form">
-    <div id="">
-        <input id="inputField" type="text" class="form-control" placeholder="type message" />
-        <button id="sendButton" type="button" class="btn btn-default">send</button>
-    </div>
-</form>
-
-<script src="/resources/js/main.js"></script>
+<jsp:include page="../templates/chat-frame.jsp"/>
 
 </body>
 </html>
