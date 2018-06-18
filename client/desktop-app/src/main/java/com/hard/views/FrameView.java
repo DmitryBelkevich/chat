@@ -105,7 +105,7 @@ public class FrameView extends View {
          */
 
         ActionListener actionListener = new SendActionListener();
-        messagesInputTextArea.addKeyListener(new KeyListener1());
+        messagesInputTextArea.addKeyListener(new SendKeyListener1());
         sendButton.addActionListener(actionListener);
         frame.addWindowListener(new CloseWindowListener());
     }
@@ -143,7 +143,11 @@ public class FrameView extends View {
         }
     }
 
-    private class KeyListener1 implements KeyListener {
+    /**
+     * Enter: send message
+     * Ctrl + Enter: return to new line
+     */
+    private class SendKeyListener1 implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
 
@@ -154,8 +158,10 @@ public class FrameView extends View {
             int keyCode = e.getKeyCode();
 
             if (keyCode == KeyEvent.VK_ENTER) {
+                e.consume();
+
                 String str = messagesInputTextArea.getText();
-                if (str.equals(""))
+                if (str.trim().equals(""))
                     return;
 
                 sendMessage(str);
@@ -168,7 +174,11 @@ public class FrameView extends View {
         }
     }
 
-    private class KeyListener2 implements KeyListener {
+    /**
+     * Ctrl + Enter: send message
+     * Enter: return to new line
+     */
+    private class SendKeyListener2 implements KeyListener {
         private final Set<Integer> pressed = new HashSet<>();
 
         @Override
