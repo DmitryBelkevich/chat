@@ -37,7 +37,7 @@ public class FrameView extends View {
     }
 
     public void createGui() {
-        JFrame frame = new JFrame("ChatController");
+        JFrame frame = new JFrame("Chat");
 
         frame.setSize(640, 480);
         frame.setLocationRelativeTo(null);
