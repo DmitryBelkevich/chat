@@ -100,8 +100,8 @@ public class FrameView extends View {
          * add listeners
          */
 
-        messagesInputTextArea.addKeyListener(new SendKeyListener1());
-        sendButton.addActionListener(new SendActionListener());
+        messagesInputTextArea.addKeyListener(new SendMessageKeyListener1());
+        sendButton.addActionListener(new SendMessageActionListener());
         frame.addWindowListener(new CloseWindowListener());
     }
 
@@ -127,7 +127,7 @@ public class FrameView extends View {
      * listeners
      */
 
-    private class SendActionListener implements ActionListener {
+    private class SendMessageActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String str = messagesInputTextArea.getText();
@@ -142,7 +142,7 @@ public class FrameView extends View {
      * Enter: send message
      * Ctrl + Enter: return to new line
      */
-    private class SendKeyListener1 implements KeyListener {
+    private class SendMessageKeyListener1 implements KeyListener {
         private final Set<Integer> pressedKeys = new HashSet<>();
 
         @Override
@@ -186,7 +186,7 @@ public class FrameView extends View {
      * Ctrl + Enter: send message
      * Enter: return to new line
      */
-    private class SendKeyListener2 implements KeyListener {
+    private class SendMessageKeyListener2 implements KeyListener {
         private final Set<Integer> pressedKeys = new HashSet<>();
 
         @Override
