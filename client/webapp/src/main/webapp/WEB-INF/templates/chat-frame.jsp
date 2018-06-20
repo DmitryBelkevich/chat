@@ -1,4 +1,7 @@
-<textarea id="messagesOutputTextArea" class="form-control" rows="20"></textarea>
+<div class="input-group">
+    <textarea id="messagesOutputTextArea" class="form-control" rows="20"></textarea>
+    <textarea id="usersOutputTextArea" class="form-control"></textarea>
+</div>
 
 <div class="input-group">
     <textarea id="messagesInputTextArea" class="form-control" placeholder="type message"></textarea>
