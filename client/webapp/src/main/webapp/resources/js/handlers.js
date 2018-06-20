@@ -4,7 +4,7 @@
 
 var sendButton = document.getElementById("sendButton");
 var messagesTextArea = document.getElementById("messagesTextArea");
-var inputTextArea = document.getElementById("inputTextArea");
+var messagesInputTextArea = document.getElementById("messagesInputTextArea");
 
 /**
  * handlers
@@ -13,8 +13,8 @@ var inputTextArea = document.getElementById("inputTextArea");
 var sendMessage = function (str) {
     socket.send(str);
 
-    inputTextArea.focus();
-    inputTextArea.value = "";
+    messagesInputTextArea.focus();
+    messagesInputTextArea.value = "";
 };
 
 var getMessage = function (str) {
@@ -32,7 +32,7 @@ var getMessage = function (str) {
  */
 
 var sendListener = function () {
-    var str = inputTextArea.value;
+    var str = messagesInputTextArea.value;
 
     if (str == "")
         return;
