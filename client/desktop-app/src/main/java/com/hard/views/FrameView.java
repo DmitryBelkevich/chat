@@ -144,29 +144,36 @@ public class FrameView extends View {
      * Ctrl + Enter: return to new line
      */
     private class SendKeyListener1 implements KeyListener {
+        private final Set<Integer> pressedKeys = new HashSet<>();
+
         @Override
-        public void keyTyped(KeyEvent e) {
+        public synchronized void keyTyped(KeyEvent e) {
 
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {
+        public synchronized void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
 
-            if (keyCode == KeyEvent.VK_ENTER) {
-                e.consume();
+            pressedKeys.add(keyCode);
 
-                String str = messagesInputTextArea.getText();
-                if (str.trim().equals(""))
-                    return;
+            if (pressedKeys.size() == 1) {
+                if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
+                    e.consume();
 
-                sendMessage(str);
+                    String str = messagesInputTextArea.getText();
+                    if (str.trim().equals(""))
+                        return;
+
+                    sendMessage(str);
+                }
             }
         }
 
         @Override
-        public void keyReleased(KeyEvent e) {
-
+        public synchronized void keyReleased(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+            pressedKeys.remove(keyCode);
         }
     }
 
@@ -178,7 +185,7 @@ public class FrameView extends View {
         private final Set<Integer> pressedKeys = new HashSet<>();
 
         @Override
-        public void keyTyped(KeyEvent e) {
+        public synchronized void keyTyped(KeyEvent e) {
 
         }
 
@@ -188,7 +195,7 @@ public class FrameView extends View {
 
             pressedKeys.add(keyCode);
 
-            if (pressedKeys.size() > 1) {
+            if (pressedKeys.size() == 2) {
                 if (pressedKeys.contains(KeyEvent.VK_CONTROL) && pressedKeys.contains(KeyEvent.VK_ENTER)) {
                     String str = messagesInputTextArea.getText();
                     if (str.equals(""))
