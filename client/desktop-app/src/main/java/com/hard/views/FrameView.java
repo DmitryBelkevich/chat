@@ -100,9 +100,8 @@ public class FrameView extends View {
          * add listeners
          */
 
-        ActionListener actionListener = new SendActionListener();
         messagesInputTextArea.addKeyListener(new SendKeyListener1());
-        sendButton.addActionListener(actionListener);
+        sendButton.addActionListener(new SendActionListener());
         frame.addWindowListener(new CloseWindowListener());
     }
 
