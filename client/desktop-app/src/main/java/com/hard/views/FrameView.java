@@ -175,7 +175,7 @@ public class FrameView extends View {
      * Enter: return to new line
      */
     private class SendKeyListener2 implements KeyListener {
-        private final Set<Integer> pressed = new HashSet<>();
+        private final Set<Integer> pressedKeys = new HashSet<>();
 
         @Override
         public void keyTyped(KeyEvent e) {
@@ -186,10 +186,10 @@ public class FrameView extends View {
         public synchronized void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
 
-            pressed.add(keyCode);
+            pressedKeys.add(keyCode);
 
-            if (pressed.size() > 1) {
-                if (pressed.contains(KeyEvent.VK_CONTROL) && pressed.contains(KeyEvent.VK_ENTER)) {
+            if (pressedKeys.size() > 1) {
+                if (pressedKeys.contains(KeyEvent.VK_CONTROL) && pressedKeys.contains(KeyEvent.VK_ENTER)) {
                     String str = messagesInputTextArea.getText();
                     if (str.equals(""))
                         return;
@@ -202,7 +202,7 @@ public class FrameView extends View {
         @Override
         public synchronized void keyReleased(KeyEvent e) {
             int keyCode = e.getKeyCode();
-            pressed.remove(keyCode);
+            pressedKeys.remove(keyCode);
         }
     }
 
