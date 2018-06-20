@@ -41,8 +41,22 @@ var sendMessageActionListener = function () {
     sendMessage(str);
 };
 
+var sendMessageKeyListener1 = function (e) {
+    var keyCode = e.keyCode ? e.keyCode : e.which;
+
+    if (keyCode == 13) {//Enter
+        var str = messagesInputTextArea.value;
+
+        if (str == "")
+            return;
+
+        sendMessage(str);
+    }
+};
+
 /**
  * add listeners
  */
 
 sendButton.addEventListener("click", sendMessageActionListener);
+messagesInputTextArea.addEventListener("keyup", sendMessageKeyListener1);
