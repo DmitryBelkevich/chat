@@ -44,6 +44,8 @@ var sendMessageKeyListener1 = function (e) {
     var keyCode = e.keyCode ? e.keyCode : e.which;
 
     if (keyCode == 13) {//Enter
+        e.preventDefault();
+
         var str = messagesInputTextArea.value;
         if (str.trim() == "")
             return;
@@ -57,4 +59,4 @@ var sendMessageKeyListener1 = function (e) {
  */
 
 sendButton.addEventListener("click", sendMessageActionListener);
-messagesInputTextArea.addEventListener("keyup", sendMessageKeyListener1);
+messagesInputTextArea.addEventListener("keydown", sendMessageKeyListener1);
