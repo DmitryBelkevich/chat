@@ -52,6 +52,8 @@ var sendMessageKeyListener1 = function (e) {
 
         sendMessage(str);
     }
+
+    // TODO Ctrl + Enter: return to new line
 };
 
 /**
