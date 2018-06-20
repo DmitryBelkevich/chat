@@ -34,8 +34,7 @@ var getMessage = function (str) {
 
 var sendMessageActionListener = function () {
     var str = messagesInputTextArea.value;
-
-    if (str == "")
+    if (str.trim() == "")
         return;
 
     sendMessage(str);
@@ -46,8 +45,7 @@ var sendMessageKeyListener1 = function (e) {
 
     if (keyCode == 13) {//Enter
         var str = messagesInputTextArea.value;
-
-        if (str == "")
+        if (str.trim() == "")
             return;
 
         sendMessage(str);
