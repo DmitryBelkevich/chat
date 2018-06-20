@@ -4,6 +4,7 @@
 
 var messagesOutputTextArea = document.getElementById("messagesOutputTextArea");
 var messagesInputTextArea = document.getElementById("messagesInputTextArea");
+var usersOutputTextArea = document.getElementById("usersOutputTextArea");
 var sendButton = document.getElementById("sendButton");
 
 /**
@@ -31,7 +32,7 @@ var getMessage = function (str) {
  * listeners
  */
 
-var sendListener = function () {
+var sendMessageActionListener = function () {
     var str = messagesInputTextArea.value;
 
     if (str == "")
@@ -44,4 +45,4 @@ var sendListener = function () {
  * add listeners
  */
 
-sendButton.addEventListener("click", sendListener);
+sendButton.addEventListener("click", sendMessageActionListener);
