@@ -168,6 +168,12 @@ public class FrameView extends View {
                     sendMessage(str);
                 }
             }
+
+            if (pressedKeys.size() == 2) {
+                if (pressedKeys.contains(KeyEvent.VK_CONTROL) && pressedKeys.contains(KeyEvent.VK_ENTER)) {
+                    messagesInputTextArea.append("\n");
+                }
+            }
         }
 
         @Override
