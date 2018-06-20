@@ -2,9 +2,9 @@
  * components
  */
 
-var sendButton = document.getElementById("sendButton");
-var messagesTextArea = document.getElementById("messagesTextArea");
+var messagesOutputTextArea = document.getElementById("messagesOutputTextArea");
 var messagesInputTextArea = document.getElementById("messagesInputTextArea");
+var sendButton = document.getElementById("sendButton");
 
 /**
  * handlers
@@ -18,13 +18,13 @@ var sendMessage = function (str) {
 };
 
 var getMessage = function (str) {
-    messagesTextArea.innerHTML += str + "\n";
+    messagesOutputTextArea.innerHTML += str + "\n";
 
     // scroll to bottom
     var magnet = 200;
 
-    if (messagesTextArea.scrollTop >= (messagesTextArea.scrollHeight - messagesTextArea.offsetHeight - magnet))
-        messagesTextArea.scrollTop = messagesTextArea.scrollHeight - messagesTextArea.offsetHeight;
+    if (messagesOutputTextArea.scrollTop >= (messagesOutputTextArea.scrollHeight - messagesOutputTextArea.offsetHeight - magnet))
+        messagesOutputTextArea.scrollTop = messagesOutputTextArea.scrollHeight - messagesOutputTextArea.offsetHeight;
 };
 
 /**
