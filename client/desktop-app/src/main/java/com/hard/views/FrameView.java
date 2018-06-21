@@ -25,15 +25,7 @@ public class FrameView extends View {
     public void run() {
         createGui();
 
-        clientController.connect("localhost", 9999);
-
-        clientController.sendMessage("\r\n\r\n"); // handshake
-
-        while (true) {
-            String str = clientController.getMessage();
-
-            clientController.notifyAllViews(str);
-        }
+        connect();
     }
 
     public void createGui() {
@@ -121,6 +113,18 @@ public class FrameView extends View {
 
         messagesInputTextArea.requestFocus();
         messagesInputTextArea.setText(null);
+    }
+
+    public void connect() {
+        clientController.connect("localhost", 9999);
+
+        clientController.sendMessage("\r\n\r\n"); // handshake
+
+        while (true) {
+            String str = clientController.getMessage();
+
+            clientController.notifyAllViews(str);
+        }
     }
 
     /**
