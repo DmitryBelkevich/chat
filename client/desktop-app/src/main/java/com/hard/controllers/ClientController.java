@@ -1,30 +1,17 @@
 package com.hard.controllers;
 
 import com.hard.models.Client;
-import com.hard.views.ConsoleView;
-import com.hard.views.FrameView;
 import com.hard.views.View;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class ClientController {
+    private Client client;
     private Collection<View> views;
 
-    private Client client;
-
-    public ClientController(Client client) {
-        views = new ArrayList<>();
-
-        views.add(new ConsoleView(this));
-        views.add(new FrameView(this));
-
+    public ClientController(Client client, Collection<View> views) {
         this.client = client;
-    }
-
-    public void run() {
-        for (View view : views)
-            view.run();
+        this.views = views;
     }
 
     public void connect(String host, int port) {

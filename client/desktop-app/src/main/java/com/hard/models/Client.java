@@ -28,6 +28,26 @@ public class Client {
         }
     }
 
+    public void disconnect() {
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String read() {
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         String result = null;
@@ -54,26 +74,6 @@ public class Client {
         try {
             dataOutputStream.writeUTF(str);
             dataOutputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void disconnect() {
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
