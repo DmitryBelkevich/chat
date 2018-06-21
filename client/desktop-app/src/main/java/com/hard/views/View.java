@@ -1,12 +1,12 @@
 package com.hard.views;
 
-import com.hard.controllers.ChatController;
+import com.hard.controllers.ClientController;
 
 public abstract class View {
-    protected ChatController chatController;
+    protected ClientController clientController;
 
-    public View(ChatController chatController) {
-        this.chatController = chatController;
+    public View(ClientController clientController) {
+        this.clientController = clientController;
     }
 
     public abstract void run();

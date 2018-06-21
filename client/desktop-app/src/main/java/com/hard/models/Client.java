@@ -1,9 +1,9 @@
-package com.hard.services;
+package com.hard.models;
 
 import java.io.*;
 import java.net.Socket;
 
-public class ChatService {
+public class Client {
     private Socket socket;
     private InputStream inputStream;
     private OutputStream outputStream;

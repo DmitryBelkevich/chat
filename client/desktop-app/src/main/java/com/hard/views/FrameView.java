@@ -1,6 +1,6 @@
 package com.hard.views;
 
-import com.hard.controllers.ChatController;
+import com.hard.controllers.ClientController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,22 +17,22 @@ public class FrameView extends View {
     private JScrollPane messagesOutputScrollPane;
     private JScrollPane usersOutputScrollPane;
 
-    public FrameView(ChatController chatController) {
-        super(chatController);
+    public FrameView(ClientController clientController) {
+        super(clientController);
     }
 
     @Override
     public void run() {
         createGui();
 
-        chatController.connect("localhost", 9999);
+        clientController.connect("localhost", 9999);
 
-        chatController.sendMessage("\r\n\r\n"); // handshake
+        clientController.sendMessage("\r\n\r\n"); // handshake
 
         while (true) {
-            String str = chatController.getMessage();
+            String str = clientController.getMessage();
 
-            chatController.notifyAllViews(str);
+            clientController.notifyAllViews(str);
         }
     }
 
@@ -117,7 +117,7 @@ public class FrameView extends View {
 
     @Override
     public void sendMessage(String str) {
-        chatController.sendMessage(str);
+        clientController.sendMessage(str);
 
         messagesInputTextArea.requestFocus();
         messagesInputTextArea.setText(null);
@@ -221,7 +221,7 @@ public class FrameView extends View {
     private class CloseWindowListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
-            chatController.disconnect();
+            clientController.disconnect();
         }
     }
 }
