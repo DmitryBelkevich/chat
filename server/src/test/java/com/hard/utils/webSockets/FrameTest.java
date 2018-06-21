@@ -7,13 +7,42 @@ import java.util.Arrays;
 
 public class FrameTest {
     /**
+     * Server to Client
+     */
+
+    // payLoadLength < 126
+    // from 0 to 125
+
+    @Test
+    public void test1() {
+
+    }
+
+    // payLoadLength == 126
+    // from 126 to (2^(2*8))
+
+    @Test
+    public void test2() {
+
+    }
+
+    // payLoadLength == 127
+    // from (2^(2*8)) to (2^(8*8))
+
+    @Test
+    public void test3() {
+
+    }
+
+    /**
      * Client to Server
      */
 
     // payLoadLength < 126
+    // from 0 to 125
 
     @Test
-    public void test1() {
+    public void test4() {
         String str = "1234567890" +
                 "1234567890" +
                 "1234567890" +
@@ -61,9 +90,10 @@ public class FrameTest {
     }
 
     // payLoadLength == 126
+    // from 126 to (2^(2*8))
 
     @Test
-    public void test2() {
+    public void test5() {
         String str = "1234567890" +
                 "1234567890" +
                 "1234567890" +
@@ -127,4 +157,10 @@ public class FrameTest {
     }
 
     // payLoadLength == 127
+    // from (2^(2*8)) to (2^(8*8))
+
+    @Test
+    public void test6() {
+
+    }
 }
