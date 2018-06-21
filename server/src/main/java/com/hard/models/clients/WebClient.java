@@ -47,9 +47,9 @@ public class WebClient extends Client {
         frame.setRsv1(false);
         frame.setRsv2(false);
         frame.setRsv3(false);
-        frame.setOpCode((byte) 1);
+        frame.setOpCode((byte) 0x1);
         frame.setMask(false);
-        frame.setPayLoadLength((byte) str.getBytes().length);
+        frame.setPayLoadLength(str.getBytes().length);
         frame.setMaskingKey(null);
         frame.setPayLoad(str.getBytes());
 
