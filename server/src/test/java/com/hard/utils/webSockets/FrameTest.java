@@ -12,7 +12,6 @@ public class FrameTest {
 
     // payLoadLength < 126
     // from 0 to 125
-
     @Test
     public void test1() {
 
@@ -40,19 +39,17 @@ public class FrameTest {
 
     // payLoadLength < 126
     // from 0 to 125
-
     @Test
     public void test4() {
-        String str = "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int n = 100;
+        String s = "1234567890";
+        for (int i = 0; i < n / s.length(); i++) {
+            stringBuilder.append(s);
+        }
+
+        String str = stringBuilder.toString();
 
         byte[] bytes = {
                 // fin, rsv1, rsv2, rsv3, opCode
@@ -72,7 +69,7 @@ public class FrameTest {
                 -33, 30, -47, -71, -37, 26, -43, -75, -41, 28, -45, -65, -35, 24, -41, -69, -39, 20, -37, -67,
         };
 
-        Assert.assertEquals(100, str.length());
+        Assert.assertEquals(n, str.length());
         Assert.assertEquals(2 + 4 + str.length(), bytes.length);
 
         Frame frame = Frame.parse(bytes);
@@ -93,26 +90,15 @@ public class FrameTest {
 
     @Test
     public void test5() {
-        String str = "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890" +
-                "1234567890";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int n = 200;
+        String s = "1234567890";
+        for (int i = 0; i < n / s.length(); i++) {
+            stringBuilder.append(s);
+        }
+
+        String str = stringBuilder.toString();
 
         byte[] bytes = {
                 // fin, rsv1, rsv2, rsv3, opCode
@@ -139,7 +125,7 @@ public class FrameTest {
                 -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
         };
 
-        Assert.assertEquals(200, str.length());
+        Assert.assertEquals(n, str.length());
         Assert.assertEquals(2 + 2 + 4 + str.length(), bytes.length);
 
         Frame frame = Frame.parse(bytes);
