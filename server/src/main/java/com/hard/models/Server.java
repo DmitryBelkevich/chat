@@ -1,8 +1,8 @@
-package com.hard;
+package com.hard.models;
 
-import com.hard.clients.Client;
-import com.hard.clients.SimpleClient;
-import com.hard.clients.WebClient;
+import com.hard.models.clients.Client;
+import com.hard.models.clients.SimpleClient;
+import com.hard.models.clients.WebClient;
 import com.hard.services.HandshakeService;
 
 import java.io.*;

@@ -1,7 +1,6 @@
-package com.hard.clients;
+package com.hard.models.clients;
 
-import com.hard.Server;
-import com.hard.models.User;
+import com.hard.models.Server;
 
 import java.io.*;
 import java.net.Socket;

@@ -1,6 +1,6 @@
-package com.hard.clients;
+package com.hard.models.clients;
 
-import com.hard.Server;
+import com.hard.models.Server;
 import com.hard.models.User;
 
 import java.io.IOException;

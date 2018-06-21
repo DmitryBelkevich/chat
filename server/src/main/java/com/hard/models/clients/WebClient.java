@@ -1,6 +1,6 @@
-package com.hard.clients;
+package com.hard.models.clients;
 
-import com.hard.Server;
+import com.hard.models.Server;
 import com.hard.utils.webSockets.Decoder;
 import com.hard.utils.webSockets.Frame;
 
