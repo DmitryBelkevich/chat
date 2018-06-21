@@ -12,7 +12,7 @@ public class Frame {
     private boolean rsv3;
     private byte opCode;
     private boolean mask;
-    private byte payLoadLength;
+    private int payLoadLength;
     private byte[] maskingKey;
     private byte[] payLoad;
 
@@ -64,11 +64,11 @@ public class Frame {
         this.mask = mask;
     }
 
-    public byte getPayLoadLength() {
+    public int getPayLoadLength() {
         return payLoadLength;
     }
 
-    public void setPayLoadLength(byte payLoadLength) {
+    public void setPayLoadLength(int payLoadLength) {
         this.payLoadLength = payLoadLength;
     }
 
@@ -142,16 +142,19 @@ public class Frame {
             // следующие 2 байта (16 bits) интерпретируются как 16-битное беззнаковое целое число, содержащее длину тела
             // поле "payLoad length" (7 bits + 2 bytes)
             byteCount = 2;
+            frame.payLoadLength = 0;
         } else if (frame.payLoadLength == 0x7F) {    // 127
             // следующие 8 байт (64 bits) интерпретируются как 64-битное беззнаковое целое, содержащее длину.
             // поле "payLoad length" (7 bits + 8 bytes)
             byteCount = 8;
+            frame.payLoadLength = 0;
         }
 
         // Decode Payload Length
-        while (--byteCount > 0) {
+        while (byteCount-- > 0) {
             currentByte = buffer.get();
-            frame.payLoadLength |= (currentByte & 0xFF) << (8 * byteCount);
+
+            frame.payLoadLength |= currentByte & 0xFF << (8 * byteCount);
         }
 
         // Masking Key
