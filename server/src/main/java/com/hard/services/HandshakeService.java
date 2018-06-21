@@ -85,7 +85,8 @@ public class HandshakeService {
             e.printStackTrace();
         }
 
-        String concatenatedString = secWebSocketKey + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+        String GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+        String concatenatedString = secWebSocketKey + GUID;
 
         byte[] concatenatedStringBytes = new byte[0];
         try {
