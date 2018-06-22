@@ -12,10 +12,38 @@ public class FrameTest {
         /**
          * payLoadLength < 126
          * from 0 to 125
+         *
+         * mask = false
+         * masking = null
          */
         @Test
         public void test1() {
+            StringBuilder stringBuilder = new StringBuilder();
 
+            int n = 125;
+
+            for (int i = 0; i < n; i++) {
+                stringBuilder.append(i % 10);
+            }
+
+            String str = stringBuilder.toString();
+
+            Frame frame = new Frame();
+
+            frame.setFin(true);
+            frame.setRsv1(false);
+            frame.setRsv2(false);
+            frame.setRsv3(false);
+            frame.setOpCode((byte) 0x1);
+            frame.setMask(false);
+            frame.setPayLoadLength(str.getBytes().length);
+            frame.setMaskingKey(null);
+            frame.setPayLoad(str.getBytes());
+
+            byte[] bytes = frame.asBytes();
+
+            Assert.assertEquals(n, str.length());
+            Assert.assertEquals(2 + str.length(), bytes.length);
         }
 
         /**
@@ -24,7 +52,32 @@ public class FrameTest {
          */
         @Test
         public void test2() {
+            StringBuilder stringBuilder = new StringBuilder();
 
+            int n = 126;
+
+            for (int i = 0; i < n; i++) {
+                stringBuilder.append(i % 10);
+            }
+
+            String str = stringBuilder.toString();
+
+            Frame frame = new Frame();
+
+            frame.setFin(true);
+            frame.setRsv1(false);
+            frame.setRsv2(false);
+            frame.setRsv3(false);
+            frame.setOpCode((byte) 0x1);
+            frame.setMask(false);
+            frame.setPayLoadLength(str.getBytes().length);
+            frame.setMaskingKey(null);
+            frame.setPayLoad(str.getBytes());
+
+            byte[] bytes = frame.asBytes();
+
+            Assert.assertEquals(n, str.length());
+            Assert.assertEquals(2 + 2 + str.length(), bytes.length);
         }
 
         /**
@@ -58,7 +111,6 @@ public class FrameTest {
             byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
             try {
                 // fin, rsv1, rsv2, rsv3, opCode
                 byteArrayOutputStream.write(-127);
@@ -113,7 +165,6 @@ public class FrameTest {
             byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
             try {
                 // fin, rsv1, rsv2, rsv3, opCode
                 byteArrayOutputStream.write(-127);
@@ -170,7 +221,6 @@ public class FrameTest {
             byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
             try {
                 // fin, rsv1, rsv2, rsv3, opCode
                 byteArrayOutputStream.write(-127);
