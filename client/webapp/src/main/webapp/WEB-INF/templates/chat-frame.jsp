@@ -1,6 +1,6 @@
 <div class="input-group">
-    <textarea id="messagesOutputTextArea" class="form-control" rows="20"></textarea>
-    <textarea id="usersOutputTextArea" class="form-control"></textarea>
+    <textarea id="messagesOutputTextArea" class="form-control" rows="20" readonly></textarea>
+    <textarea id="usersOutputTextArea" class="form-control" readonly></textarea>
 </div>
 
 <div class="input-group">
