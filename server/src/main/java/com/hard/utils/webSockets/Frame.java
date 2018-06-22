@@ -142,19 +142,28 @@ public class Frame {
             // следующие 2 байта (16 bits) интерпретируются как 16-битное беззнаковое целое число, содержащее длину тела
             // поле "payLoad length" (7 bits + 2 bytes)
             byteCount = 2;
-            frame.payLoadLength = 0;
         } else if (frame.payLoadLength == 0x7F) {    // 127
             // следующие 8 байт (64 bits) интерпретируются как 64-битное беззнаковое целое, содержащее длину.
             // поле "payLoad length" (7 bits + 8 bytes)
             byteCount = 8;
-            frame.payLoadLength = 0;
         }
 
         // Decode Payload Length
-        while (byteCount-- > 0) {
-            currentByte = buffer.get();
+        byte[] extendedPayLoadLengthBytes = new byte[byteCount];
 
-            frame.payLoadLength |= currentByte/* & 0xFF*/ << (8 * byteCount);
+        for (int i = 0; i < byteCount; i++) {
+            extendedPayLoadLengthBytes[i] = buffer.get();
+        }
+
+        int extendedPayLoadLength = 0;
+        for (int i = extendedPayLoadLengthBytes.length - 1; i > 0; i--) {
+            currentByte = extendedPayLoadLengthBytes[i];
+
+            extendedPayLoadLength |= currentByte & 0xFF << (8 * (extendedPayLoadLengthBytes.length - 1 - i));
+        }
+
+        if (frame.payLoadLength == 0x7E || frame.payLoadLength == 0x7F) {
+            frame.payLoadLength = extendedPayLoadLength;
         }
 
         // Masking Key
