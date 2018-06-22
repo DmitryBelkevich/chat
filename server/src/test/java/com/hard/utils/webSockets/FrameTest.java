@@ -99,7 +99,7 @@ public class FrameTest {
     public void test5() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        int n = 200;
+        int n = 250;
 
         for (int i = 0; i < n; i++) {
             stringBuilder.append(i % 10);
@@ -120,7 +120,7 @@ public class FrameTest {
             byteArrayOutputStream.write(1 << 7 | 126);    // -2
 
             // extended payLoadLength
-            byteArrayOutputStream.write(new byte[]{0, -56});
+            byteArrayOutputStream.write(new byte[]{0, (byte) (0xffffff << 8 | payLoad.length)});// 0, -56
 
             // maskingKey
             byteArrayOutputStream.write(maskingKey);
