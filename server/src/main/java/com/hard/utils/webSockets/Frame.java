@@ -89,19 +89,37 @@ public class Frame {
     }
 
     public byte[] asBytes() {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
         // fin, rsv1, rsv2, rsv3, opCode
 
         byte byte1 = (byte) ((fin ? 1 : 0) << 7 | (rsv1 ? 1 : 0) | (rsv2 ? 1 : 0) | (rsv3 ? 1 : 0) | opCode);
 
         // mask, payLoad length
 
+        if (payLoadLength >= 126 && payLoadLength <= 65535) {
+            payLoadLength = 126;
+        } else if (payLoadLength >= 65536) {
+            payLoadLength = 127;
+        }
+
         byte byte2 = (byte) ((mask ? 1 : 0) << 7 | payLoadLength);
 
+        // extended payLoadLength
+
+        byte[] extendedPayLoadLength = {};
+
+        if (payLoadLength == 126) {
+            extendedPayLoadLength = splitToBytes(payLoad.length, 2);
+        } else if (payLoadLength == 127) {
+            extendedPayLoadLength = splitToBytes(payLoad.length, 8);
+        }
+
+        payLoadLength = payLoad.length;
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             byteArrayOutputStream.write(byte1);
             byteArrayOutputStream.write(byte2);
+            byteArrayOutputStream.write(extendedPayLoadLength);
             byteArrayOutputStream.write(payLoad);
         } catch (IOException e) {
             e.printStackTrace();
@@ -185,6 +203,16 @@ public class Frame {
 //        }
 
         return frame;
+    }
+
+    private byte[] splitToBytes(int value, int n) {
+        byte[] bytes = new byte[n];
+
+        for (int i = 0; i < n; i++) {
+            bytes[n - 1 - i] = (byte) (value >> 8 * i & 0xFF);
+        }
+
+        return bytes;
     }
 
     @Override
