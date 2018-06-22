@@ -8,220 +8,225 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class FrameTest {
-    /**
-     * Server to Client
-     */
+    public static class Server_to_Client {
+        /**
+         * payLoadLength < 126
+         * from 0 to 125
+         */
+        @Test
+        public void test1() {
 
-    // payLoadLength < 126
-    // from 0 to 125
-    @Test
-    public void test1() {
-
-    }
-
-    // payLoadLength == 126
-    // from 126 to (2^(2*8))
-
-    @Test
-    public void test2() {
-
-    }
-
-    // payLoadLength == 127
-    // from (2^(2*8)) to (2^(8*8))
-
-    @Test
-    public void test3() {
-
-    }
-
-    /**
-     * Client to Server
-     */
-
-    // payLoadLength < 126
-    // from 0 to 125
-    @Test
-    public void test4() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        int n = 125;
-
-        for (int i = 0; i < n; i++) {
-            stringBuilder.append(i % 10);
         }
 
-        String str = stringBuilder.toString();
+        /**
+         * payLoadLength == 126
+         * from 126 to (2^(2*8))
+         */
+        @Test
+        public void test2() {
 
-        byte[] maskingKey = {-18, 44, -30, -115,};
-        byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        try {
-            // fin, rsv1, rsv2, rsv3, opCode
-            byteArrayOutputStream.write(-127);
-
-            // mask, payLoad length
-            byteArrayOutputStream.write(1 << 7 | payLoad.length); // -28
-
-            // maskingKey
-            byteArrayOutputStream.write(maskingKey);
-
-            // payLoad
-            byteArrayOutputStream.write(payLoad);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        byte[] bytes = byteArrayOutputStream.toByteArray();
+        /**
+         * payLoadLength == 127
+         * from (2^(2*8)) to (2^(8*8))
+         */
+        @Test
+        public void test3() {
 
-        Assert.assertEquals(n, str.length());
-        Assert.assertEquals(2 + 4 + str.length(), bytes.length);
-
-        Frame frame = Frame.parse(bytes);
-
-        Assert.assertEquals(true, frame.isFin());
-        Assert.assertEquals(false, frame.isRsv1());
-        Assert.assertEquals(false, frame.isRsv2());
-        Assert.assertEquals(false, frame.isRsv3());
-        Assert.assertEquals(0x1, frame.getOpCode());
-        Assert.assertEquals(true, frame.isMask());
-        Assert.assertEquals(str.length(), frame.getPayLoadLength());
-        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2, 2 + 4), frame.getMaskingKey()));
-        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 4, bytes.length), frame.getPayLoad()));
+        }
     }
 
-    // payLoadLength == 126
-    // from 126 to (2^(2*8))
+    public static class Client_to_Server {
+        /**
+         * payLoadLength < 126
+         * from 0 to 125
+         */
+        @Test
+        public void test1() {
+            StringBuilder stringBuilder = new StringBuilder();
 
-    @Test
-    public void test5_255() {
-        StringBuilder stringBuilder = new StringBuilder();
+            int n = 125;
 
-        int n = 255;
+            for (int i = 0; i < n; i++) {
+                stringBuilder.append(i % 10);
+            }
 
-        for (int i = 0; i < n; i++) {
-            stringBuilder.append(i % 10);
+            String str = stringBuilder.toString();
+
+            byte[] maskingKey = {-18, 44, -30, -115,};
+            byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            try {
+                // fin, rsv1, rsv2, rsv3, opCode
+                byteArrayOutputStream.write(-127);
+
+                // mask, payLoad length
+                byteArrayOutputStream.write(1 << 7 | payLoad.length); // -28
+
+                // maskingKey
+                byteArrayOutputStream.write(maskingKey);
+
+                // payLoad
+                byteArrayOutputStream.write(payLoad);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+
+            Assert.assertEquals(n, str.length());
+            Assert.assertEquals(2 + 4 + str.length(), bytes.length);
+
+            Frame frame = Frame.parse(bytes);
+
+            Assert.assertEquals(true, frame.isFin());
+            Assert.assertEquals(false, frame.isRsv1());
+            Assert.assertEquals(false, frame.isRsv2());
+            Assert.assertEquals(false, frame.isRsv3());
+            Assert.assertEquals(0x1, frame.getOpCode());
+            Assert.assertEquals(true, frame.isMask());
+            Assert.assertEquals(str.length(), frame.getPayLoadLength());
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2, 2 + 4), frame.getMaskingKey()));
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 4, bytes.length), frame.getPayLoad()));
         }
 
-        String str = stringBuilder.toString();
+        /**
+         * payLoadLength == 126
+         * from 126 to (2^(2*8))
+         */
+        @Test
+        public void test2_255() {
+            StringBuilder stringBuilder = new StringBuilder();
 
-        byte[] maskingKey = {-79, -71, -121, 123,};
-        byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
+            int n = 255;
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            for (int i = 0; i < n; i++) {
+                stringBuilder.append(i % 10);
+            }
 
-        try {
-            // fin, rsv1, rsv2, rsv3, opCode
-            byteArrayOutputStream.write(-127);
+            String str = stringBuilder.toString();
 
-            // mask, payLoad length
-            byteArrayOutputStream.write(1 << 7 | 126);    // -2
+            byte[] maskingKey = {-79, -71, -121, 123,};
+            byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
 
-            // extended payLoadLength
-            byte[] payLoadLength = splitToBytes(str.length(), 2);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-            byteArrayOutputStream.write(payLoadLength);// 0, -56
+            try {
+                // fin, rsv1, rsv2, rsv3, opCode
+                byteArrayOutputStream.write(-127);
 
-            // maskingKey
-            byteArrayOutputStream.write(maskingKey);
+                // mask, payLoad length
+                byteArrayOutputStream.write(1 << 7 | 126);    // -2
 
-            // payLoad
-            byteArrayOutputStream.write(payLoad);
-        } catch (IOException e) {
-            e.printStackTrace();
+                // extended payLoadLength
+                byte[] payLoadLength = splitToBytes(str.length(), 2);
+
+                byteArrayOutputStream.write(payLoadLength);// 0, -56
+
+                // maskingKey
+                byteArrayOutputStream.write(maskingKey);
+
+                // payLoad
+                byteArrayOutputStream.write(payLoad);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+
+            Assert.assertEquals(n, str.length());
+            Assert.assertEquals(2 + 2 + 4 + str.length(), bytes.length);
+
+            Frame frame = Frame.parse(bytes);
+
+            Assert.assertEquals(true, frame.isFin());
+            Assert.assertEquals(false, frame.isRsv1());
+            Assert.assertEquals(false, frame.isRsv2());
+            Assert.assertEquals(false, frame.isRsv3());
+            Assert.assertEquals(0x1, frame.getOpCode());
+            Assert.assertEquals(true, frame.isMask());
+            Assert.assertEquals(str.length(), frame.getPayLoadLength());
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2, 2 + 2 + 4), frame.getMaskingKey()));
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2 + 4, bytes.length), frame.getPayLoad()));
         }
 
-        byte[] bytes = byteArrayOutputStream.toByteArray();
 
-        Assert.assertEquals(n, str.length());
-        Assert.assertEquals(2 + 2 + 4 + str.length(), bytes.length);
+        @Test
+        public void test2_256() {
+            StringBuilder stringBuilder = new StringBuilder();
 
-        Frame frame = Frame.parse(bytes);
+            int n = 256;
 
-        Assert.assertEquals(true, frame.isFin());
-        Assert.assertEquals(false, frame.isRsv1());
-        Assert.assertEquals(false, frame.isRsv2());
-        Assert.assertEquals(false, frame.isRsv3());
-        Assert.assertEquals(0x1, frame.getOpCode());
-        Assert.assertEquals(true, frame.isMask());
-        Assert.assertEquals(str.length(), frame.getPayLoadLength());
-        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2, 2 + 2 + 4), frame.getMaskingKey()));
-        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2 + 4, bytes.length), frame.getPayLoad()));
-    }
+            for (int i = 0; i < n; i++) {
+                stringBuilder.append(i % 10);
+            }
 
-    @Test
-    public void test5_256() {
-        StringBuilder stringBuilder = new StringBuilder();
+            String str = stringBuilder.toString();
 
-        int n = 256;
+            byte[] maskingKey = {-79, -71, -121, 123,};
+            byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
 
-        for (int i = 0; i < n; i++) {
-            stringBuilder.append(i % 10);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            try {
+                // fin, rsv1, rsv2, rsv3, opCode
+                byteArrayOutputStream.write(-127);
+
+                // mask, payLoad length
+                byteArrayOutputStream.write(1 << 7 | 126);    // -2
+
+                // extended payLoadLength
+                byte[] payLoadLength = splitToBytes(str.length(), 2);
+
+                byteArrayOutputStream.write(payLoadLength);// 0, -56
+
+                // maskingKey
+                byteArrayOutputStream.write(maskingKey);
+
+                // payLoad
+                byteArrayOutputStream.write(payLoad);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+
+            Assert.assertEquals(n, str.length());
+            Assert.assertEquals(2 + 2 + 4 + str.length(), bytes.length);
+
+            Frame frame = Frame.parse(bytes);
+
+            Assert.assertEquals(true, frame.isFin());
+            Assert.assertEquals(false, frame.isRsv1());
+            Assert.assertEquals(false, frame.isRsv2());
+            Assert.assertEquals(false, frame.isRsv3());
+            Assert.assertEquals(0x1, frame.getOpCode());
+            Assert.assertEquals(true, frame.isMask());
+            Assert.assertEquals(str.length(), frame.getPayLoadLength());
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2, 2 + 2 + 4), frame.getMaskingKey()));
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2 + 4, bytes.length), frame.getPayLoad()));
         }
 
-        String str = stringBuilder.toString();
+        /**
+         * payLoadLength == 127
+         * from (2^(2*8)) to (2^(8*8))
+         */
+        @Test
+        public void test3() {
 
-        byte[] maskingKey = {-79, -71, -121, 123,};
-        byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        try {
-            // fin, rsv1, rsv2, rsv3, opCode
-            byteArrayOutputStream.write(-127);
-
-            // mask, payLoad length
-            byteArrayOutputStream.write(1 << 7 | 126);    // -2
-
-            // extended payLoadLength
-            byte[] payLoadLength = splitToBytes(str.length(), 2);
-
-            byteArrayOutputStream.write(payLoadLength);// 0, -56
-
-            // maskingKey
-            byteArrayOutputStream.write(maskingKey);
-
-            // payLoad
-            byteArrayOutputStream.write(payLoad);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        byte[] bytes = byteArrayOutputStream.toByteArray();
+        public byte[] splitToBytes(int value, int n) {
+            byte[] bytes = new byte[n];
 
-        Assert.assertEquals(n, str.length());
-        Assert.assertEquals(2 + 2 + 4 + str.length(), bytes.length);
+            for (int i = 0; i < n; i++) {
+                bytes[n - 1 - i] = (byte) (value >> 8 * i & 0xFF);
+            }
 
-        Frame frame = Frame.parse(bytes);
-
-        Assert.assertEquals(true, frame.isFin());
-        Assert.assertEquals(false, frame.isRsv1());
-        Assert.assertEquals(false, frame.isRsv2());
-        Assert.assertEquals(false, frame.isRsv3());
-        Assert.assertEquals(0x1, frame.getOpCode());
-        Assert.assertEquals(true, frame.isMask());
-        Assert.assertEquals(str.length(), frame.getPayLoadLength());
-        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2, 2 + 2 + 4), frame.getMaskingKey()));
-        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2 + 4, bytes.length), frame.getPayLoad()));
-    }
-
-    // payLoadLength == 127
-    // from (2^(2*8)) to (2^(8*8))
-
-    @Test
-    public void test6() {
-
-    }
-
-    public byte[] splitToBytes(int value, int n) {
-        byte[] bytes = new byte[n];
-
-        for (int i = 0; i < n; i++) {
-            bytes[n - 1 - i] = (byte) (value >> 8 * i & 0xFF);
+            return bytes;
         }
-
-        return bytes;
     }
 }
