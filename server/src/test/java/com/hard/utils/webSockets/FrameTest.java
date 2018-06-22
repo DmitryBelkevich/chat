@@ -53,6 +53,9 @@ public class FrameTest {
 
         String str = stringBuilder.toString();
 
+        byte[] maskingKey = {-18, 44, -30, -115,};
+        byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         try {
@@ -60,21 +63,13 @@ public class FrameTest {
             byteArrayOutputStream.write(-127);
 
             // mask, payLoad length
-            byteArrayOutputStream.write(-28);
+            byteArrayOutputStream.write(1 << 7 | payLoad.length); // -28
 
             // maskingKey
-            byteArrayOutputStream.write(new byte[]{
-                    -18, 44, -30, -115,
-            });
+            byteArrayOutputStream.write(maskingKey);
 
             // payLoad
-            byteArrayOutputStream.write(new byte[]{
-                    -33, 30, -47, -71, -37, 26, -43, -75, -41, 28, -45, -65, -35, 24, -41, -69, -39, 20, -37, -67,
-                    -33, 30, -47, -71, -37, 26, -43, -75, -41, 28, -45, -65, -35, 24, -41, -69, -39, 20, -37, -67,
-                    -33, 30, -47, -71, -37, 26, -43, -75, -41, 28, -45, -65, -35, 24, -41, -69, -39, 20, -37, -67,
-                    -33, 30, -47, -71, -37, 26, -43, -75, -41, 28, -45, -65, -35, 24, -41, -69, -39, 20, -37, -67,
-                    -33, 30, -47, -71, -37, 26, -43, -75, -41, 28, -45, -65, -35, 24, -41, -69, -39, 20, -37, -67,
-            });
+            byteArrayOutputStream.write(payLoad);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,6 +107,9 @@ public class FrameTest {
 
         String str = stringBuilder.toString();
 
+        byte[] maskingKey = {-79, -71, -121, 123,};
+        byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         try {
@@ -119,29 +117,16 @@ public class FrameTest {
             byteArrayOutputStream.write(-127);
 
             // mask, payLoad length
-            byteArrayOutputStream.write(-2);
+            byteArrayOutputStream.write(1 << 7 | 126);    // -2
 
             // extended payLoadLength
             byteArrayOutputStream.write(new byte[]{0, -56});
 
             // maskingKey
-            byteArrayOutputStream.write(new byte[]{
-                    -79, -71, -121, 123,
-            });
+            byteArrayOutputStream.write(maskingKey);
 
             // payLoad
-            byteArrayOutputStream.write(new byte[]{
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-                    -128, -117, -76, 79, -124, -113, -80, 67, -120, -119, -74, 73, -126, -115, -78, 77, -122, -127, -66, 75,
-            });
+            byteArrayOutputStream.write(payLoad);
         } catch (IOException e) {
             e.printStackTrace();
         }
