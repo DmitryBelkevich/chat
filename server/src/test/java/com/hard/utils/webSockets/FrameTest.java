@@ -45,7 +45,7 @@ public class FrameTest {
     public void test4() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        int n = 100;
+        int n = 125;
 
         for (int i = 0; i < n; i++) {
             stringBuilder.append(i % 10);
