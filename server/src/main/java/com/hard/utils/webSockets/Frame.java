@@ -154,7 +154,7 @@ public class Frame {
         while (byteCount-- > 0) {
             currentByte = buffer.get();
 
-            frame.payLoadLength |= currentByte & 0xFF << (8 * byteCount);
+            frame.payLoadLength |= currentByte/* & 0xFF*/ << (8 * byteCount);
         }
 
         // Masking Key
