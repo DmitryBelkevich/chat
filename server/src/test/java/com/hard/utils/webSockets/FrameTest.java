@@ -96,10 +96,66 @@ public class FrameTest {
     // from 126 to (2^(2*8))
 
     @Test
-    public void test5() {
+    public void test5_255() {
         StringBuilder stringBuilder = new StringBuilder();
 
         int n = 255;
+
+        for (int i = 0; i < n; i++) {
+            stringBuilder.append(i % 10);
+        }
+
+        String str = stringBuilder.toString();
+
+        byte[] maskingKey = {-79, -71, -121, 123,};
+        byte[] payLoad = Encoder.encode(str.getBytes(), maskingKey);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        try {
+            // fin, rsv1, rsv2, rsv3, opCode
+            byteArrayOutputStream.write(-127);
+
+            // mask, payLoad length
+            byteArrayOutputStream.write(1 << 7 | 126);    // -2
+
+            // extended payLoadLength
+            byte[] payLoadLength = splitToBytes(str.length(), 2);
+
+            byteArrayOutputStream.write(payLoadLength);// 0, -56
+
+            // maskingKey
+            byteArrayOutputStream.write(maskingKey);
+
+            // payLoad
+            byteArrayOutputStream.write(payLoad);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+
+        Assert.assertEquals(n, str.length());
+        Assert.assertEquals(2 + 2 + 4 + str.length(), bytes.length);
+
+        Frame frame = Frame.parse(bytes);
+
+        Assert.assertEquals(true, frame.isFin());
+        Assert.assertEquals(false, frame.isRsv1());
+        Assert.assertEquals(false, frame.isRsv2());
+        Assert.assertEquals(false, frame.isRsv3());
+        Assert.assertEquals(0x1, frame.getOpCode());
+        Assert.assertEquals(true, frame.isMask());
+        Assert.assertEquals(str.length(), frame.getPayLoadLength());
+        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2, 2 + 2 + 4), frame.getMaskingKey()));
+        Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2 + 4, bytes.length), frame.getPayLoad()));
+    }
+
+    @Test
+    public void test5_256() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int n = 256;
 
         for (int i = 0; i < n; i++) {
             stringBuilder.append(i % 10);
