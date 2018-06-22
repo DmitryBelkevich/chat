@@ -99,7 +99,7 @@ public class FrameTest {
     public void test5() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        int n = 256;
+        int n = 255;
 
         for (int i = 0; i < n; i++) {
             stringBuilder.append(i % 10);
