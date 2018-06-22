@@ -61,6 +61,9 @@ public class FrameTest {
         /**
          * payLoadLength == 126
          * from 126 to (2^(2*8))
+         *
+         * mask = false
+         * masking = null
          */
         @Test
         public void test2() {
