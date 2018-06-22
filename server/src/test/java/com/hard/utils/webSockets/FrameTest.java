@@ -46,9 +46,9 @@ public class FrameTest {
         StringBuilder stringBuilder = new StringBuilder();
 
         int n = 100;
-        String s = "1234567890";
-        for (int i = 0; i < n / s.length(); i++) {
-            stringBuilder.append(s);
+
+        for (int i = 0; i < n; i++) {
+            stringBuilder.append(i % 10);
         }
 
         String str = stringBuilder.toString();
@@ -100,9 +100,9 @@ public class FrameTest {
         StringBuilder stringBuilder = new StringBuilder();
 
         int n = 200;
-        String s = "1234567890";
-        for (int i = 0; i < n / s.length(); i++) {
-            stringBuilder.append(s);
+
+        for (int i = 0; i < n; i++) {
+            stringBuilder.append(i % 10);
         }
 
         String str = stringBuilder.toString();
