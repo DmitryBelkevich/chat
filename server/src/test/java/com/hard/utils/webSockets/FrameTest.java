@@ -120,9 +120,9 @@ public class FrameTest {
             byteArrayOutputStream.write(1 << 7 | 126);    // -2
 
             // extended payLoadLength
-            byte[] bytes = splitToBytes(str.length(), 2);
+            byte[] payLoadLength = splitToBytes(str.length(), 2);
 
-            byteArrayOutputStream.write(bytes);// 0, -56
+            byteArrayOutputStream.write(payLoadLength);// 0, -56
 
             // maskingKey
             byteArrayOutputStream.write(maskingKey);
