@@ -120,7 +120,9 @@ public class FrameTest {
             byteArrayOutputStream.write(1 << 7 | 126);    // -2
 
             // extended payLoadLength
-            byteArrayOutputStream.write(new byte[]{0, (byte) (0xffffff << 8 | payLoad.length)});// 0, -56
+            byte[] bytes = splitToBytes(str.length(), 2);
+
+            byteArrayOutputStream.write(bytes);// 0, -56
 
             // maskingKey
             byteArrayOutputStream.write(maskingKey);
@@ -155,5 +157,15 @@ public class FrameTest {
     @Test
     public void test6() {
 
+    }
+
+    public byte[] splitToBytes(int value, int n) {
+        byte[] bytes = new byte[n];
+
+        for (int i = 0; i < n; i++) {
+            bytes[n - 1 - i] = (byte) (value >> 8 * i & 0xFF);
+        }
+
+        return bytes;
     }
 }
