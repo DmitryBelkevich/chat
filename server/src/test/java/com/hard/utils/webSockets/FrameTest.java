@@ -44,6 +44,18 @@ public class FrameTest {
 
             Assert.assertEquals(n, str.length());
             Assert.assertEquals(2 + str.length(), bytes.length);
+
+            Frame frame2 = Frame.parse(bytes);
+
+            Assert.assertEquals(true, frame2.isFin());
+            Assert.assertEquals(false, frame2.isRsv1());
+            Assert.assertEquals(false, frame2.isRsv2());
+            Assert.assertEquals(false, frame2.isRsv3());
+            Assert.assertEquals(0x1, frame2.getOpCode());
+            Assert.assertEquals(false, frame2.isMask());
+            Assert.assertEquals(str.length(), frame2.getPayLoadLength());
+            Assert.assertEquals(null, frame2.getMaskingKey());
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2, bytes.length), frame2.getPayLoad()));
         }
 
         /**
@@ -78,6 +90,18 @@ public class FrameTest {
 
             Assert.assertEquals(n, str.length());
             Assert.assertEquals(2 + 2 + str.length(), bytes.length);
+
+            Frame frame2 = Frame.parse(bytes);
+
+            Assert.assertEquals(true, frame2.isFin());
+            Assert.assertEquals(false, frame2.isRsv1());
+            Assert.assertEquals(false, frame2.isRsv2());
+            Assert.assertEquals(false, frame2.isRsv3());
+            Assert.assertEquals(0x1, frame2.getOpCode());
+            Assert.assertEquals(false, frame2.isMask());
+            Assert.assertEquals(str.length(), frame2.getPayLoadLength());
+            Assert.assertEquals(null, frame2.getMaskingKey());
+            Assert.assertTrue(Arrays.equals(Arrays.copyOfRange(bytes, 2 + 2, bytes.length), frame2.getPayLoad()));
         }
 
         /**
