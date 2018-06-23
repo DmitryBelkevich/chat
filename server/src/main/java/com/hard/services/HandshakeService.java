@@ -15,24 +15,25 @@ public class HandshakeService {
     private static final String CRLF = "\r\n";
 
     public void handshake(InputStream inputStream, OutputStream outputStream) {
-        String requestHeaders = getRequestHeaders(inputStream);
+        /**
+         * request
+         */
+        String requestHeaders = readRequestHeaders(inputStream);
 
-        validation(requestHeaders);
+        validationRequestHeaders(requestHeaders);
 
+        /**
+         * response
+         */
         String secWebSocketKey = getSecWebSocketKey(requestHeaders);
         String secWebSocketAccept = evaluateSecWebSocketAccept(secWebSocketKey);
 
         String responseHeaders = generateResponseHeaders(secWebSocketAccept);
 
-        try {
-            outputStream.write(responseHeaders.getBytes());
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeResponseHeaders(outputStream, responseHeaders.getBytes());
     }
 
-    private String getRequestHeaders(InputStream inputStream) {
+    private String readRequestHeaders(InputStream inputStream) {
         Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter(CRLF + CRLF);
 
         String requestHeaders = scanner.next();
@@ -40,7 +41,7 @@ public class HandshakeService {
         return requestHeaders;
     }
 
-    private void validation(String requestHeaders) {
+    private void validationRequestHeaders(String requestHeaders) {
         Matcher getMatcher = Pattern.compile("^GET").matcher(requestHeaders);
         if (!getMatcher.find())
             throw new RuntimeException("Not found GET header");
@@ -99,5 +100,14 @@ public class HandshakeService {
         String secWebSocketAccept = Base64.getEncoder().encodeToString(sha1Bytes);
 
         return secWebSocketAccept;
+    }
+
+    private void writeResponseHeaders(OutputStream outputStream, byte[] responseHeaders) {
+        try {
+            outputStream.write(responseHeaders);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
